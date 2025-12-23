@@ -199,6 +199,11 @@ export default function MathematicsPage() {
       {activeGame === "probability" && <ProbabilityRun onClose={handleGameClose} />}
       {activeGame === "pattern-master" && <PatternMaster onClose={handleGameClose} />}
       {activeGame === "budget" && <VillageBudgetPlanner onClose={handleGameClose} />}
+      {activeGame === "heist" && <MathHeist onClose={handleGameClose} />}
+      {activeGame === "grocery" && <GroceryMarket onClose={handleGameClose} />}
+      {activeGame === "spin" && <DailyMathSpin onClose={handleGameClose} />}
+      {activeGame === "pattern-quest" && <PatternMasterGame onClose={handleGameClose} />}
+      {activeGame === "farm" && <FarmYieldCalculator onClose={handleGameClose} />}
     </>
   );
 }
