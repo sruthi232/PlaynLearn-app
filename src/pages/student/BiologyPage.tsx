@@ -66,6 +66,10 @@ export default function BiologyPage() {
       xpEarned={180}
     >
       <div className="slide-up" style={{ animationDelay: "150ms" }}>
+        <BiologyActiveLearning />
+      </div>
+
+      <div className="slide-up" style={{ animationDelay: "200ms" }}>
         <h3 className="mb-4 font-heading font-semibold text-foreground">
           🎮 Gamified Learning
         </h3>
