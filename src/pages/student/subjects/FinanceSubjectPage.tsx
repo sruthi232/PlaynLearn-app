@@ -358,6 +358,139 @@ export default function FinanceSubjectPage() {
     setSelectedGame(null);
   };
 
+  // Show chapter view
+  if (selectedChapter) {
+    return (
+      <AppLayout role="student" playCoins={1250} title={`Chapter ${selectedChapter.chapter}: ${selectedChapter.title}`}>
+        <div className="px-4 py-6 pb-24">
+          <div className="mb-6">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSelectedChapter(null)}
+              className="flex items-center gap-2 mb-4"
+            >
+              <ChevronRight className="h-4 w-4 transform rotate-180" />
+              Back to Passive Learning
+            </Button>
+          </div>
+
+          {/* Chapter Content */}
+          <div className="glass-card rounded-2xl p-6 border border-secondary/30 bg-gradient-to-br from-secondary/10 to-secondary/5">
+            <div className="flex items-start gap-4 mb-6">
+              <div className="h-16 w-16 rounded-xl bg-secondary/20 flex items-center justify-center shrink-0">
+                <BookOpen className="h-8 w-8 text-secondary" />
+              </div>
+              <div className="flex-1">
+                <h1 className="font-heading text-3xl font-bold text-foreground mb-2">
+                  Chapter {selectedChapter.chapter}: {selectedChapter.title}
+                </h1>
+                <p className="text-sm text-muted-foreground">📖 {selectedChapter.duration} read time</p>
+              </div>
+            </div>
+
+            {/* Chapter Body */}
+            <div className="prose prose-invert max-w-none mb-8">
+              <div className="space-y-4 text-foreground/90">
+                {selectedChapter.chapter === 1 && (
+                  <>
+                    <h2 className="font-heading text-2xl font-bold text-foreground mt-6 mb-3">What is Money?</h2>
+                    <p>Money is a medium of exchange that allows us to trade goods and services without barter. Throughout history, money has evolved from commodity-based systems to modern digital forms.</p>
+
+                    <h3 className="font-heading text-lg font-semibold text-foreground mt-5 mb-2">Key Concepts:</h3>
+                    <ul className="space-y-2 ml-4">
+                      <li>• <strong>Currency:</strong> The form of money used in a specific country</li>
+                      <li>• <strong>Value:</strong> The worth of money in relation to goods and services</li>
+                      <li>• <strong>Purchasing Power:</strong> How much you can buy with your money</li>
+                    </ul>
+
+                    <h3 className="font-heading text-lg font-semibold text-foreground mt-5 mb-2">Types of Money:</h3>
+                    <ul className="space-y-2 ml-4">
+                      <li>• <strong>Cash:</strong> Physical coins and notes</li>
+                      <li>• <strong>Digital Money:</strong> Transfers, cards, and mobile payments</li>
+                      <li>• <strong>Cryptocurrency:</strong> Digital currencies like Bitcoin</li>
+                    </ul>
+                  </>
+                )}
+
+                {selectedChapter.chapter === 2 && (
+                  <>
+                    <h2 className="font-heading text-2xl font-bold text-foreground mt-6 mb-3">Understanding Savings</h2>
+                    <p>Savings is the practice of setting aside money for future use instead of spending it immediately. It's one of the most important financial habits you can develop.</p>
+
+                    <h3 className="font-heading text-lg font-semibold text-foreground mt-5 mb-2">Why Save?</h3>
+                    <ul className="space-y-2 ml-4">
+                      <li>• Build an emergency fund for unexpected expenses</li>
+                      <li>• Plan for future goals (education, travel, housing)</li>
+                      <li>• Create financial security and reduce stress</li>
+                      <li>• Earn interest on your savings</li>
+                    </ul>
+
+                    <h3 className="font-heading text-lg font-semibold text-foreground mt-5 mb-2">Saving Strategies:</h3>
+                    <ul className="space-y-2 ml-4">
+                      <li>• <strong>Pay Yourself First:</strong> Save before spending</li>
+                      <li>• <strong>Set Goals:</strong> Know what you're saving for</li>
+                      <li>• <strong>Automate:</strong> Set up automatic transfers to savings</li>
+                      <li>• <strong>Track Progress:</strong> Monitor your savings growth</li>
+                    </ul>
+
+                    <h3 className="font-heading text-lg font-semibold text-foreground mt-5 mb-2">Interest & Compound Growth:</h3>
+                    <p>When you keep money in a bank account, the bank pays you interest. Compound interest means you earn interest on your interest, which grows your savings exponentially over time.</p>
+                  </>
+                )}
+
+                {selectedChapter.chapter === 3 && (
+                  <>
+                    <h2 className="font-heading text-2xl font-bold text-foreground mt-6 mb-3">Banking Basics</h2>
+                    <p>Banks are institutions that safely store your money and provide financial services to help you manage your wealth.</p>
+
+                    <h3 className="font-heading text-lg font-semibold text-foreground mt-5 mb-2">What Banks Do:</h3>
+                    <ul className="space-y-2 ml-4">
+                      <li>• Safe storage of your money</li>
+                      <li>• Provide savings and checking accounts</li>
+                      <li>• Offer loans and credit products</li>
+                      <li>• Process payments and transfers</li>
+                      <li>• Pay interest on deposits</li>
+                    </ul>
+
+                    <h3 className="font-heading text-lg font-semibold text-foreground mt-5 mb-2">Types of Bank Accounts:</h3>
+                    <ul className="space-y-2 ml-4">
+                      <li>• <strong>Savings Account:</strong> For saving money and earning interest</li>
+                      <li>• <strong>Checking Account:</strong> For everyday transactions</li>
+                      <li>• <strong>Student Account:</strong> Special accounts for students</li>
+                    </ul>
+
+                    <h3 className="font-heading text-lg font-semibold text-foreground mt-5 mb-2">Digital Banking:</h3>
+                    <p>Modern banks offer digital services like mobile apps, UPI transfers, and online banking that make managing your money convenient and secure.</p>
+
+                    <h3 className="font-heading text-lg font-semibold text-foreground mt-5 mb-2">Bank Safety:</h3>
+                    <p>Your deposits are protected by the government. Most countries have deposit insurance that guarantees your money is safe even if the bank fails.</p>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3 pt-6 border-t border-secondary/30">
+              <Button
+                onClick={() => setSelectedChapter(null)}
+                variant="outline"
+                className="flex-1"
+              >
+                Back to Chapters
+              </Button>
+              <Button
+                className="flex-1 bg-secondary hover:bg-secondary/90"
+              >
+                Mark as Complete
+              </Button>
+            </div>
+          </div>
+        </div>
+      </AppLayout>
+    );
+  }
+
   // Show active module view
   if (activeModule) {
     const ModuleComponent = activeModule.component;
