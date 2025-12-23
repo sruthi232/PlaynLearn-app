@@ -174,7 +174,7 @@ export default function ForceBuilder() {
     ctx.strokeRect(object.x, OBJECT_Y, object.width, object.height);
 
     // Object label
-    ctx.fillStyle = "#FFF";
+    ctx.fillStyle = "#000";
     ctx.font = "bold 12px Arial";
     ctx.textAlign = "center";
     ctx.fillText(
