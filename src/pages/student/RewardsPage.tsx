@@ -222,7 +222,21 @@ export default function RewardsPage() {
                     <p className="font-heading text-2xl font-bold text-secondary">
                       {earned.toLocaleString()}
                     </p>
-                    <EduCoin size="sm" />
+                    <img
+                      alt="EduCoin"
+                      width="48"
+                      height="48"
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets%2Fa9d627de7a0c400a9a5045a9ca4a12ea%2F461226e32d554b2c97f6e5a78d92d2bd"
+                      className="edu-coin-earned"
+                      style={{
+                        display: "block",
+                        aspectRatio: "1 / 1",
+                        filter: "drop-shadow(rgba(0, 0, 0, 0.04) 0px 10px 8px) drop-shadow(rgba(0, 0, 0, 0.1) 0px 4px 3px)",
+                        objectFit: "contain",
+                        width: "48px",
+                      }}
+                    />
                   </div>
                 </div>
 
