@@ -205,10 +205,10 @@ export function GameContainer({
 
       {/* Instructions & Learning Section */}
       {!isInExpandedMode && (
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Instructions */}
-          <Card className="glass-card border border-border/50 p-4">
-            <h3 className="font-heading font-semibold text-foreground mb-2 flex items-center gap-2">
+          <Card className="glass-card border border-border/50 p-5 rounded-xl">
+            <h3 className="font-heading font-semibold text-foreground mb-3 flex items-center gap-2">
               <span className="text-lg">📘</span>
               Instructions
             </h3>
@@ -216,8 +216,8 @@ export function GameContainer({
           </Card>
 
           {/* Concept Learned */}
-          <Card className="glass-card border border-border/50 p-4">
-            <h3 className="font-heading font-semibold text-foreground mb-2 flex items-center gap-2">
+          <Card className="glass-card border border-border/50 p-5 rounded-xl">
+            <h3 className="font-heading font-semibold text-foreground mb-3 flex items-center gap-2">
               <span className="text-lg">🧠</span>
               Concept Learned
             </h3>
@@ -228,11 +228,11 @@ export function GameContainer({
 
       {/* Game Controls */}
       {!isInExpandedMode && (
-        <div className="mt-6 flex gap-3 flex-wrap">
+        <div className="mt-8 flex gap-3 justify-center flex-wrap">
           <Button
             onClick={onRetry}
             variant="outline"
-            className="flex-1 sm:flex-none"
+            className="px-6 py-2 rounded-lg"
           >
             <RotateCcw className="h-4 w-4 mr-2" />
             Retry
@@ -240,7 +240,7 @@ export function GameContainer({
           <Button
             onClick={handleExitClick}
             variant="outline"
-            className="flex-1 sm:flex-none"
+            className="px-6 py-2 rounded-lg"
           >
             <X className="h-4 w-4 mr-2" />
             Exit Game
