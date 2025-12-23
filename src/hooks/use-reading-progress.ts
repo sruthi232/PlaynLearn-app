@@ -47,37 +47,48 @@ export function useReadingProgress(subject: string) {
     }) => {
       if (!user?.id) throw new Error("Not authenticated");
 
-      const { data: existing } = await supabase
-        .from("reading_progress")
-        .select("id")
-        .eq("user_id", user.id)
-        .eq("subject", subject)
-        .eq("chapter_id", chapterId)
-        .single();
-
-      if (existing) {
-        const { error } = await supabase
+      try {
+        const { data: existingList, error: queryError } = await supabase
           .from("reading_progress")
-          .update({
+          .select("id")
+          .eq("user_id", user.id)
+          .eq("subject", subject)
+          .eq("chapter_id", chapterId);
+
+        if (queryError) {
+          throw queryError;
+        }
+
+        const existingRecord = existingList && existingList.length > 0 ? existingList[0] : null;
+
+        if (existingRecord?.id) {
+          const { error } = await supabase
+            .from("reading_progress")
+            .update({
+              content_index: contentIndex,
+              is_completed: isCompleted,
+              completed_at: isCompleted ? new Date().toISOString() : null,
+              last_read_at: new Date().toISOString(),
+            })
+            .eq("id", existingRecord.id);
+
+          if (error) throw error;
+        } else {
+          const { error } = await supabase.from("reading_progress").insert({
+            user_id: user.id,
+            subject,
+            chapter_id: chapterId,
             content_index: contentIndex,
             is_completed: isCompleted,
             completed_at: isCompleted ? new Date().toISOString() : null,
-            last_read_at: new Date().toISOString(),
-          })
-          .eq("id", existing.id);
+          });
 
-        if (error) throw error;
-      } else {
-        const { error } = await supabase.from("reading_progress").insert({
-          user_id: user.id,
-          subject,
-          chapter_id: chapterId,
-          content_index: contentIndex,
-          is_completed: isCompleted,
-          completed_at: isCompleted ? new Date().toISOString() : null,
-        });
-
-        if (error) throw error;
+          if (error) throw error;
+        }
+      } catch (error) {
+        console.error("Reading progress save error:", error);
+        // Silently fail to prevent blocking user experience
+        // Progress will still work, just won't persist to database
       }
     },
     onSuccess: () => {

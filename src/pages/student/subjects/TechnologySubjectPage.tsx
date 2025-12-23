@@ -33,21 +33,21 @@ const levels: GameLevel[] = [
   {
     id: "1",
     level: 1,
-    name: "Digital Basics",
-    description: "Learn to use computers, phones, and digital devices",
-    game: "Device Master",
+    name: "How Apps Really Work",
+    description: "Visual flow: User Input → Logic → Output. Tap to see data move through systems",
+    game: "Interactive Exploration",
     xp: 100,
     coins: 25,
-    status: "completed",
-    stars: 2,
+    status: "available",
+    stars: 0,
     route: "/student/technology/level/1"
   },
   {
     id: "2",
     level: 2,
-    name: "Internet & Safety",
-    description: "Navigate the web safely and protect your information",
-    game: "Cyber Guardian",
+    name: "Inside a Digital System",
+    description: "Drag blocks (Input, Process, Storage, Output) to understand system architecture",
+    game: "Block Builder",
     xp: 150,
     coins: 35,
     status: "available",
@@ -56,23 +56,23 @@ const levels: GameLevel[] = [
   {
     id: "3",
     level: 3,
-    name: "Problem Solving & Logic",
-    description: "Think like a programmer and solve digital puzzles",
-    game: "Code Quest",
+    name: "Everyday Tech Around You",
+    description: "Tap common items to reveal what inputs and outputs they use",
+    game: "Tech Explorer",
     xp: 200,
     coins: 50,
-    status: "locked",
+    status: "available",
     route: "/student/technology/level/3"
   }
 ];
 
 export default function TechnologySubjectPage() {
   const navigate = useNavigate();
-  const totalProgress = 20;
+  const totalProgress = 35;
   const completedLevels = levels.filter(l => l.status === "completed").length;
 
   return (
-    <AppLayout role="student" playCoins={1250} title="Technology">
+    <AppLayout role="student" playCoins={1250} title="Technology - Active Learning">
       <div className="px-4 py-6 pb-24">
         {/* Subject Header */}
         <div className="mb-6 slide-up">
@@ -83,7 +83,7 @@ export default function TechnologySubjectPage() {
               </div>
               <div className="flex-1">
                 <h2 className="font-heading text-2xl font-bold text-foreground">Technology</h2>
-                <p className="text-sm text-muted-foreground">Digital skills & coding</p>
+                <p className="text-sm text-muted-foreground">Hands-on learning through interaction</p>
               </div>
             </div>
             <div className="space-y-2">
@@ -93,21 +93,21 @@ export default function TechnologySubjectPage() {
               </div>
               <AnimatedProgress value={totalProgress} variant="default" />
               <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span>{completedLevels}/{levels.length} Levels Complete</span>
+                <span>{completedLevels}/{levels.length} Modules Complete</span>
                 <GameBadge variant="primary" size="sm">
                   <Trophy className="h-3 w-3 mr-1" />
-                  Beginner
+                  Learner
                 </GameBadge>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Game Levels */}
+        {/* Active Learning Modules */}
         <div className="mb-4">
           <h3 className="font-heading font-semibold text-foreground mb-3 flex items-center gap-2">
             <Zap className="h-5 w-5 text-accent" />
-            Game Levels
+            Interactive Modules
           </h3>
         </div>
 

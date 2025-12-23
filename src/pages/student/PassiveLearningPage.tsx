@@ -901,77 +901,157 @@ const subjectContents: Record<string, SubjectContent> = {
   },
   technology: {
     title: "Technology",
-    description: "Understanding the digital world",
+    description: "How technology shapes our world",
     chapters: [
       {
-        id: "basics",
-        title: "Digital Literacy Basics",
-        duration: "10 min",
+        id: "what-is-tech",
+        title: "What Is Technology?",
+        duration: "11 min",
         icon: Laptop,
         content: [
           {
-            heading: "Welcome to the Digital Age",
+            heading: "Technology Through Time",
             paragraphs: [
-              "Technology is all around us - from smartphones to computers to the internet.",
-              "Being digitally literate means knowing how to use technology safely and effectively.",
-              "Technology can help us learn, work, communicate, and solve problems.",
+              "Technology is anything created by humans to solve problems or make life easier.",
+              "It started with simple tools like fire and wheels, and evolved to computers and the internet.",
+              "From ancient plows to smartphones, technology has always been part of human progress.",
             ],
+            illustration: "🪨 Tools → 🚜 Machines → 🖥️ Computers → 📱 Smart Systems",
             keyPoints: [
-              "Computers process information",
-              "The internet connects the world",
-              "Digital skills are essential today",
-              "Stay safe online",
+              "Technology solves human problems",
+              "It evolves over time",
+              "Every tool is technology",
+              "Technology shapes society",
             ],
-            illustration: "📱 + 💻 + 🌐 = Digital World",
           },
           {
-            heading: "How Computers Work",
+            heading: "Tech Today: Computers & Digital Systems",
             paragraphs: [
-              "Computers take input (what you type/click), process it, and give output (what you see).",
-              "Hardware is the physical parts: screen, keyboard, mouse, processor.",
-              "Software is the programs that tell hardware what to do: apps, games, operating systems.",
+              "Modern technology is often digital - using electricity and data.",
+              "Computers are machines that process information incredibly fast.",
+              "Software (apps, programs) tells hardware (physical devices) what to do.",
+              "The internet connects billions of devices, letting us share information instantly!",
             ],
-            funFact: "The first computer (ENIAC, 1945) was as big as a room and weighed 30 tons! Now we have more power in our phones!",
+            keyPoints: [
+              "Computers: Input → Process → Output",
+              "Software controls hardware",
+              "Networks connect devices",
+              "Data flows through circuits",
+            ],
+            funFact: "Your smartphone is more powerful than computers that sent humans to the moon in 1969!",
+            illustration: "📱 = Billions of calculations per second!",
+          },
+          {
+            heading: "Technology Everywhere",
+            paragraphs: [
+              "Look around - technology is in your phone, TV, fan, fridge, car, and even your watch!",
+              "Some technology is obvious (like a computer), but some is hidden (like in a car's engine).",
+              "Every technology has inputs (what it receives), processes (what it does), and outputs (what it produces).",
+            ],
+            activity: {
+              title: "Tech Hunt",
+              description: "Find 5 different pieces of technology in your home. For each, identify: What does it do? What inputs does it need? What output does it create?"
+            },
           },
         ],
       },
       {
-        id: "internet",
-        title: "Internet & Safety",
+        id: "tech-solutions",
+        title: "How Technology Solves Problems",
         duration: "12 min",
-        icon: Globe,
+        icon: Lightbulb,
         content: [
           {
-            heading: "What is the Internet?",
+            heading: "Finding Problems, Creating Solutions",
             paragraphs: [
-              "The internet is a global network connecting millions of computers worldwide.",
-              "It allows us to share information, communicate, learn, and do business.",
-              "When you visit a website, your device connects to a server somewhere in the world!",
+              "Technology starts with a problem someone wants to solve.",
+              "Before phones, people couldn't talk to distant friends - phones solved that!",
+              "Before internet, finding information took weeks - the internet solved that!",
+              "Good technology makes life easier, saves time, or helps us do new things.",
             ],
             keyPoints: [
-              "Internet connects computers globally",
-              "Websites live on servers",
-              "Data travels through cables and satellites",
-              "WiFi connects devices wirelessly",
+              "Problem → Idea → Solution → Technology",
+              "Technology serves human needs",
+              "Better solutions replace old ones",
+              "Innovation never stops",
+            ],
+            illustration: "🤔 Problem → 💡 Idea → 🚀 Technology",
+          },
+          {
+            heading: "Before & After: Technology at Work",
+            paragraphs: [
+              "Before: Farmer measured fields manually, took days. After: GPS and drones measure in minutes!",
+              "Before: Finding a person took asking others. After: Phone calls connect instantly!",
+              "Before: Doctors examined patients in person. After: Telemedicine allows remote diagnosis!",
+              "Before: Calculations by hand took hours. After: Computers solve in seconds!",
+            ],
+            funFact: "The COVID-19 pandemic showed how important technology is - schools, hospitals, and businesses moved online instantly!",
+          },
+          {
+            heading: "Technology Creates New Opportunities",
+            paragraphs: [
+              "Technology doesn't just solve old problems - it enables completely new possibilities!",
+              "The internet let people work from home, start global businesses, and learn anything online.",
+              "Medical technology helps doctors save lives in ways previously impossible.",
+              "Communication technology connects people across the globe in real-time.",
+            ],
+            activity: {
+              title: "Solution Detective",
+              description: "Pick a problem you face (like remembering homework, finding information, staying connected). What technology could solve it? Design your own solution!"
+            },
+          },
+        ],
+      },
+      {
+        id: "thinking-like-technologist",
+        title: "Thinking Like a Technologist",
+        duration: "13 min",
+        icon: Brain,
+        content: [
+          {
+            heading: "The Technologist's Mindset",
+            paragraphs: [
+              "Technologists think systematically: break big problems into smaller parts.",
+              "They observe how things work, understand the rules, then build solutions.",
+              "A technologist asks: 'How does this work? What inputs does it need? What does it produce?'",
+              "This thinking helps solve problems in any field - not just computers!",
+            ],
+            illustration: "🔍 Observe → 🤔 Understand → 🛠️ Build → ✅ Test",
+            keyPoints: [
+              "Break problems into steps",
+              "Input → Process → Output",
+              "Test and improve",
+              "Learn from mistakes",
             ],
           },
           {
-            heading: "Staying Safe Online",
+            heading: "The Four Steps of Technology Thinking",
             paragraphs: [
-              "Never share personal information (address, phone, school) with strangers online.",
-              "Use strong passwords and don't share them. Mix letters, numbers, and symbols.",
-              "If something online makes you uncomfortable, tell a trusted adult immediately.",
+              "1. Break the Problem: What exactly are we trying to solve? What are the steps needed?",
+              "2. Build the Solution: Gather resources, create your system, code your software.",
+              "3. Test Thoroughly: Does it work? What breaks? How can we improve it?",
+              "4. Improve It: Use what you learned to make v2 better than v1!",
             ],
             keyPoints: [
-              "Keep personal info private",
-              "Use strong passwords",
-              "Think before you click",
-              "Talk to adults if unsure",
+              "Problem-solving is a process",
+              "Every failure teaches something",
+              "Iteration leads to excellence",
+              "Keep improving",
             ],
             activity: {
-              title: "Password Check",
-              description: "Is 'password123' a good password? No! Try something like 'MyD0g$Fluffy!' instead."
+              title: "Design a System",
+              description: "Design a technology to solve a school problem (like tracking attendance or organizing group projects). Draw the inputs, processes, and outputs!"
             },
+          },
+          {
+            heading: "The Technology Designer's Toolkit",
+            paragraphs: [
+              "Logic: Using rules and rules of 'if-then' thinking to build systems.",
+              "Systems Thinking: Understanding how parts connect and affect each other.",
+              "Creativity: Imagining new possibilities and combinations.",
+              "Testing Mindset: Trying things, finding what breaks, and fixing it.",
+            ],
+            funFact: "The best technologists are often artists, mathematicians, and scientists combined - using both logic and creativity!",
           },
         ],
       },

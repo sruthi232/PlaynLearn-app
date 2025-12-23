@@ -65,6 +65,9 @@ const CycleTap = lazy(() => import("./pages/student/games/CycleTap"));
 const BuildACell = lazy(() => import("./pages/student/games/BuildACell"));
 const GoodGermVsBadGerm = lazy(() => import("./pages/student/games/GoodGermVsBadGerm"));
 const MathMissions = lazy(() => import("./pages/student/games/MathMissions"));
+const TechnologyVillageLightUp = lazy(() => import("./pages/student/games/TechnologyVillageLightUp"));
+const TechnologySystemBuilder = lazy(() => import("./pages/student/games/TechnologySystemBuilder"));
+const TechnologyDebugDungeon = lazy(() => import("./pages/student/games/TechnologyDebugDungeon"));
 const TeacherDashboard = lazy(() => import("./pages/teacher/TeacherDashboard"));
 const TeacherClassesPage = lazy(() => import("./pages/teacher/TeacherClassesPage"));
 const TeacherClassDetailPage = lazy(() => import("./pages/teacher/TeacherClassDetailPage"));
@@ -236,6 +239,21 @@ const App = () => (
                 <Route path="/student/technology" element={
                   <ProtectedRoute allowedRoles={["student"]}>
                     <TechnologyPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/student/technology/village-light-up" element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <TechnologyVillageLightUp />
+                  </ProtectedRoute>
+                } />
+                <Route path="/student/technology/system-builder" element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <TechnologySystemBuilder />
+                  </ProtectedRoute>
+                } />
+                <Route path="/student/technology/debug-dungeon" element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <TechnologyDebugDungeon />
                   </ProtectedRoute>
                 } />
                 <Route path="/student/finance" element={
