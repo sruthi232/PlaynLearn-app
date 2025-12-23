@@ -489,7 +489,7 @@ export default function EnergyQuest() {
 
       {/* Controls */}
       {!isFullscreen && (
-        <div className="mt-6 w-full max-w-5xl bg-white p-6 rounded-lg border border-gray-200 shadow-md">
+        <div className="mt-6 w-full max-w-5xl bg-card p-6 rounded-lg border border-border shadow-md">
           <div className="space-y-6">
             {/* Flow Control */}
             <div className="space-y-3">
