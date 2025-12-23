@@ -507,8 +507,53 @@ export default function TasksPage() {
                             {taskDef.description}
                           </p>
 
+                          {/* STATUS-SPECIFIC INFO */}
+                          {/* Completed Task - Verification Status */}
+                          {isCompleted && completionStatus && (
+                            <div className={`mb-3 px-3 py-2 rounded-lg text-xs font-medium flex items-center gap-2 ${
+                              completionStatus === "verified"
+                                ? "bg-secondary/20 text-secondary"
+                                : completionStatus === "pending"
+                                ? "bg-accent/20 text-accent"
+                                : "bg-destructive/20 text-destructive"
+                            }`}>
+                              {completionStatus === "verified" && (
+                                <>
+                                  <CheckCircle2 className="h-4 w-4" />
+                                  ✅ Verified by Teacher
+                                </>
+                              )}
+                              {completionStatus === "pending" && (
+                                <>
+                                  <Clock className="h-4 w-4" />
+                                  ⏳ Pending Verification
+                                </>
+                              )}
+                              {completionStatus === "rejected" && (
+                                <>
+                                  <AlertCircle className="h-4 w-4" />
+                                  ❌ Rejected - Please retry
+                                </>
+                              )}
+                            </div>
+                          )}
+
+                          {/* Active Task - Progress */}
+                          {isActive && (
+                            <div className="mb-3 space-y-1">
+                              <div className="flex items-center justify-between text-xs">
+                                <span className="font-medium text-foreground">Progress</span>
+                                <span className="text-muted-foreground">65%</span>
+                              </div>
+                              <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                                <div className="h-full bg-gradient-to-r from-accent to-accent/80 rounded-full" style={{ width: "65%" }}></div>
+                              </div>
+                              <p className="text-xs text-muted-foreground">In progress...</p>
+                            </div>
+                          )}
+
                           {/* Proof Requirements */}
-                          {taskDef.proofPolicy.type !== "none" && (
+                          {taskDef.proofPolicy.type !== "none" && !isCompleted && (
                             <div className="flex items-center gap-2 mb-3 flex-wrap">
                               {taskDef.proofPolicy.type === "photo" && (
                                 <span className="flex items-center gap-1 text-xs text-muted-foreground bg-muted/30 px-2 py-1 rounded">
