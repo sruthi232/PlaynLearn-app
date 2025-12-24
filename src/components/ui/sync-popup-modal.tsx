@@ -171,10 +171,10 @@ export function SyncPopupModal({
             'shadow-2xl',
             'flex flex-col',
             'max-h-[90vh] overflow-hidden',
-            'animate-modal-pop'
+            !isSyncing && isSuccess ? 'animate-modal-pop-success' : 'animate-modal-pop'
           )}
           style={{
-            background: 'linear-gradient(180deg, rgba(30, 20, 60, 0.85) 0%, rgba(15, 10, 35, 0.9) 100%)',
+            background: 'linear-gradient(180deg, rgba(30, 20, 60, 0.8) 0%, rgba(15, 10, 35, 0.85) 100%)',
             boxShadow: `0 0 40px ${glowColor}, 0 8px 32px rgba(0, 0, 0, 0.4)`,
           }}
           onClick={(e) => e.stopPropagation()}
