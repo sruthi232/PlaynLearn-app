@@ -140,7 +140,7 @@ export function SyncPopupModal({
                 className={cn(
                   'flex items-center gap-3 p-3 rounded-lg',
                   'transition-all duration-500',
-                  item.completed ? 'bg-green-500/10' : item.failed ? 'bg-red-500/10' : 'bg-muted/50',
+                  item.completed ? 'bg-green-500/15' : item.failed ? 'bg-red-500/15' : 'bg-slate-700/50',
                   !item.completed && !item.failed && 'opacity-50'
                 )}
                 style={{
@@ -149,13 +149,13 @@ export function SyncPopupModal({
               >
                 <div className="flex-shrink-0">
                   {item.completed && !item.failed ? (
-                    <CheckCircle2 className="w-5 h-5 text-green-500 animate-bounce-in" />
+                    <CheckCircle2 className="w-5 h-5 text-green-400 animate-bounce-in" />
                   ) : item.failed ? (
-                    <AlertCircle className="w-5 h-5 text-red-500" />
+                    <AlertCircle className="w-5 h-5 text-red-400" />
                   ) : isSyncing ? (
-                    <div className="w-5 h-5 rounded-full border-2 border-transparent border-t-blue-500 animate-spin" />
+                    <div className="w-5 h-5 rounded-full border-2 border-transparent border-t-blue-400 animate-spin" />
                   ) : (
-                    <div className="w-5 h-5 rounded-full border-2 border-muted-foreground/30" />
+                    <div className="w-5 h-5 rounded-full border-2 border-gray-500/50" />
                   )}
                 </div>
 
@@ -164,7 +164,7 @@ export function SyncPopupModal({
                     <span className="text-sm text-base">{item.icon}</span>
                     <p className={cn(
                       'text-sm font-medium truncate',
-                      item.completed ? 'text-green-600 dark:text-green-400' : item.failed ? 'text-red-600 dark:text-red-400' : 'text-foreground'
+                      item.completed ? 'text-green-300' : item.failed ? 'text-red-300' : 'text-gray-200'
                     )}>
                       {item.label}
                     </p>
@@ -172,7 +172,7 @@ export function SyncPopupModal({
                 </div>
 
                 {item.failed && (
-                  <span className="text-xs font-medium text-red-600 dark:text-red-400">
+                  <span className="text-xs font-medium text-red-300">
                     {t('sync.failed')}
                   </span>
                 )}
