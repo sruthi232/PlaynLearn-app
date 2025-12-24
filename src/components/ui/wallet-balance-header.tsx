@@ -9,7 +9,7 @@ interface WalletBalanceHeaderProps {
 /**
  * WalletBalanceHeader
  * Single source of truth for top-right wallet coin display
- * 
+ *
  * Specifications (locked):
  * - Mobile (max-width: 640px): coin width 20px
  * - Desktop: coin width 32px (md size)
@@ -26,7 +26,6 @@ export function WalletBalanceHeader({ balance, className }: WalletBalanceHeaderP
           display: inline-flex;
           align-items: center;
           gap: 0.5rem;
-          font-family: var(--font-heading);
           font-weight: 600;
           border-radius: 9999px;
           padding: 0.375rem 0.75rem;
@@ -62,15 +61,6 @@ export function WalletBalanceHeader({ balance, className }: WalletBalanceHeaderP
           display: block;
         }
 
-        .wallet-balance-amount {
-          color: hsl(var(--color-secondary));
-          font-weight: 700;
-        }
-
-        .wallet-balance-label {
-          color: hsl(var(--color-secondary));
-        }
-
         /* Mobile: Reduce coin size to 20px */
         @media (max-width: 640px) {
           .wallet-coin-container img {
@@ -84,10 +74,10 @@ export function WalletBalanceHeader({ balance, className }: WalletBalanceHeaderP
         <div className="wallet-coin-container">
           <EduCoin size="md" animated={true} />
         </div>
-        <span className="wallet-balance-amount">
+        <span className="text-secondary font-bold">
           {balance.toLocaleString()}
         </span>
-        <span className="wallet-balance-label">EduCoins</span>
+        <span className="text-secondary">EduCoins</span>
       </div>
     </>
   );
