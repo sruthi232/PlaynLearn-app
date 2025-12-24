@@ -1,14 +1,15 @@
+import { useTranslation } from "react-i18next";
 import { AppLayout } from "@/components/navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AnimatedProgress } from "@/components/ui/animated-progress";
 import { GameBadge } from "@/components/ui/game-badge";
-import { 
-  Atom, 
-  Lock, 
-  Play, 
-  Star, 
+import {
+  Atom,
+  Lock,
+  Play,
+  Star,
   Trophy,
   Zap,
   CheckCircle2,
