@@ -53,10 +53,12 @@ export function PlayCoinsDisplay({
         }
       `}</style>
       {showIcon && (
-        <EduCoin
-          size={coinSizeMap[size]}
-          animated={animated}
-        />
+        <div className="edu-coin-header">
+          <EduCoin
+            size={coinSizeMap[size]}
+            animated={animated}
+          />
+        </div>
       )}
       <span className="text-secondary font-bold">
         {amount.toLocaleString()}
