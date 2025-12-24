@@ -523,14 +523,26 @@ export function SyncPopupModal({
           }
         }
 
-        @keyframes pulse-check {
+        @keyframes glow-fade {
           0% {
-            transform: scale(0.8);
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.6), inset 0 0 12px rgba(34, 197, 94, 0.2);
+          }
+          100% {
+            box-shadow: 0 0 0px rgba(34, 197, 94, 0), inset 0 0 0px rgba(34, 197, 94, 0);
+          }
+        }
+
+        @keyframes sync-arrows {
+          0% {
+            transform: translateY(-2px);
+            opacity: 0.6;
+          }
+          50% {
             opacity: 1;
           }
           100% {
-            transform: scale(2);
-            opacity: 0;
+            transform: translateY(2px);
+            opacity: 0.6;
           }
         }
 
