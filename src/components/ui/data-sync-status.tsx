@@ -25,33 +25,37 @@ export function DataSyncStatus({ className }: DataSyncStatusProps) {
   const [lastSyncTime, setLastSyncTime] = useState<string>('');
   const [showModal, setShowModal] = useState(false);
   const [syncItems, setSyncItems] = useState<SyncItem[]>([
-    { id: '1', label: t('sync.userProgress'), icon: '📚', completed: false, failed: false },
-    { id: '2', label: t('sync.leaderboard'), icon: '🏆', completed: false, failed: false },
-    { id: '3', label: t('sync.ecoCoins'), icon: '🪙', completed: false, failed: false },
-    { id: '4', label: t('sync.subjectProgress'), icon: '📖', completed: false, failed: false },
-    { id: '5', label: t('sync.tasksVerification'), icon: '✅', completed: false, failed: false },
+    { id: '1', label: t('sync.userProgress') || 'Learning Progress', icon: '📚', completed: false, failed: false },
+    { id: '2', label: t('sync.leaderboard') || 'Leaderboard', icon: '🏆', completed: false, failed: false },
+    { id: '3', label: t('sync.ecoCoins') || 'EduCoins Wallet', icon: '🪙', completed: false, failed: false },
+    { id: '4', label: t('sync.subjectProgress') || 'Subject Progress', icon: '📘', completed: false, failed: false },
+    { id: '5', label: t('sync.tasksVerification') || 'Tasks & Verifications', icon: '✅', completed: false, failed: false },
   ]);
 
   const isSyncingRef = useRef(false);
+  const syncStartTimeRef = useRef<number | null>(null);
 
-  // Load last sync time from localStorage and initialize sync items with translations
+  // Initialize on mount
   useEffect(() => {
     const saved = localStorage.getItem('last_sync_time');
     const savedStatus = localStorage.getItem('sync_status') as SyncStatus | null;
+    
     if (saved) {
       setLastSyncTime(saved);
     }
     if (savedStatus) {
       setSyncStatus(savedStatus);
     }
+  }, []);
 
-    // Update sync items with translations
+  // Update sync items with translations
+  useEffect(() => {
     setSyncItems([
-      { id: '1', label: t('sync.userProgress'), icon: '📚', completed: false, failed: false },
-      { id: '2', label: t('sync.leaderboard'), icon: '🏆', completed: false, failed: false },
-      { id: '3', label: t('sync.ecoCoins'), icon: '🪙', completed: false, failed: false },
-      { id: '4', label: t('sync.subjectProgress'), icon: '📖', completed: false, failed: false },
-      { id: '5', label: t('sync.tasksVerification'), icon: '✅', completed: false, failed: false },
+      { id: '1', label: t('sync.userProgress') || 'Learning Progress', icon: '📚', completed: false, failed: false },
+      { id: '2', label: t('sync.leaderboard') || 'Leaderboard', icon: '🏆', completed: false, failed: false },
+      { id: '3', label: t('sync.ecoCoins') || 'EduCoins Wallet', icon: '🪙', completed: false, failed: false },
+      { id: '4', label: t('sync.subjectProgress') || 'Subject Progress', icon: '📘', completed: false, failed: false },
+      { id: '5', label: t('sync.tasksVerification') || 'Tasks & Verifications', icon: '✅', completed: false, failed: false },
     ]);
   }, [t]);
 
@@ -62,22 +66,17 @@ export function DataSyncStatus({ className }: DataSyncStatusProps) {
 
   // Simulate sync operations sequentially
   const performSync = useCallback(async () => {
+    // Check internet first
     if (!isOnline()) {
-      const button = document.querySelector('[aria-label="Sync data"]');
-      if (button) {
-        button.classList.add('animate-shake');
-        setTimeout(() => {
-          button.classList.remove('animate-shake');
-        }, 500);
-      }
       toast({
-        title: t('sync.noInternet'),
-        description: t('sync.noInternetMessage'),
+        title: 'No Internet Connection',
+        description: 'Try again when connection is available.',
         variant: 'destructive',
       });
       return;
     }
 
+    // Prevent double-tap
     if (isSyncingRef.current) {
       return;
     }
@@ -85,6 +84,7 @@ export function DataSyncStatus({ className }: DataSyncStatusProps) {
     isSyncingRef.current = true;
     setSyncStatus('syncing');
     setShowModal(true);
+    syncStartTimeRef.current = Date.now();
 
     // Reset sync items
     const newSyncItems = syncItems.map(item => ({
@@ -95,35 +95,47 @@ export function DataSyncStatus({ className }: DataSyncStatusProps) {
     setSyncItems(newSyncItems);
 
     try {
-      // Simulate sequential sync operations (400ms interval)
-      await new Promise(resolve => setTimeout(resolve, 400));
+      // Sync total duration: ~5 seconds (0.8s per item × 5 items + margins)
+      const SYNC_DURATION = 5000; // 5 seconds total
+      const ITEM_DURATION = 800; // 0.8 seconds per item
 
-      // All operations complete
+      // Stagger item completion
+      for (let i = 0; i < syncItems.length; i++) {
+        await new Promise(resolve => setTimeout(resolve, ITEM_DURATION));
+        
+        setSyncItems(prev => {
+          const updated = [...prev];
+          updated[i] = { ...updated[i], completed: true };
+          return updated;
+        });
+      }
+
+      // Final completion
       const now = new Date().toISOString();
       setLastSyncTime(now);
       localStorage.setItem('last_sync_time', now);
       localStorage.setItem('sync_status', 'synced');
       setSyncStatus('synced');
 
+      // Keep modal open - user must click button to close
     } catch (error) {
       console.error('Sync failed:', error);
       setSyncStatus('error');
-      toast({
-        title: t('sync.syncFailed'),
-        description: t('sync.syncFailedMessage'),
-        variant: 'destructive',
-      });
+      
       setTimeout(() => {
         setShowModal(false);
         isSyncingRef.current = false;
       }, 3000);
     } finally {
       isSyncingRef.current = false;
+      syncStartTimeRef.current = null;
     }
-  }, [isOnline, syncItems, t, toast]);
+  }, [isOnline, syncItems, toast]);
 
   const handleSyncClick = useCallback(() => {
-    performSync();
+    if (!isSyncingRef.current) {
+      performSync();
+    }
   }, [performSync]);
 
   const handleModalClose = useCallback(() => {
@@ -134,39 +146,26 @@ export function DataSyncStatus({ className }: DataSyncStatusProps) {
   const getButtonClasses = () => {
     switch (syncStatus) {
       case 'synced':
-        return 'text-emerald-400 hover:bg-emerald-500/15 border border-emerald-500/30 hover:border-emerald-500/50';
+        return 'text-emerald-500 hover:bg-emerald-500/15 border border-emerald-500/30 hover:border-emerald-500/50';
       case 'syncing':
         return 'text-purple-400 hover:bg-purple-500/15 border border-purple-500/30 hover:border-purple-500/50';
       case 'error':
-        return 'text-red-400 hover:bg-red-500/15 border border-red-500/30 hover:border-red-500/50';
+        return 'text-red-500 hover:bg-red-500/15 border border-red-500/30 hover:border-red-500/50';
       default: // unsynced
-        return 'text-red-500 hover:bg-red-500/15 border border-red-500/30 hover:border-red-500/50 animate-pulse-subtle';
+        return 'text-red-500 hover:bg-red-500/15 border border-red-500/30 hover:border-red-500/50 animate-subtle-pulse';
     }
   };
 
   const getTooltipText = () => {
     switch (syncStatus) {
       case 'synced':
-        return 'All data synced';
+        return 'All data synced successfully';
       case 'syncing':
-        return t('sync.syncing');
+        return 'Syncing your data...';
       case 'error':
-        return t('sync.syncFailed');
+        return 'Sync failed. Try again.';
       default:
-        return 'Data not synced';
-    }
-  };
-
-  const displayText = () => {
-    switch (syncStatus) {
-      case 'synced':
-        return '✓ Synced';
-      case 'syncing':
-        return t('sync.syncing');
-      case 'error':
-        return t('sync.syncFailed');
-      default:
-        return 'Sync Data';
+        return 'Data not synced. Tap to sync.';
     }
   };
 
@@ -180,59 +179,33 @@ export function DataSyncStatus({ className }: DataSyncStatusProps) {
         aria-label="Sync data"
         title={getTooltipText()}
         className={cn(
-          'inline-flex items-center gap-2',
-          'px-3 sm:px-4',
-          'h-10 rounded-lg',
+          'inline-flex items-center justify-center',
+          'w-10 h-10 rounded-lg',
           'transition-all duration-200',
-          'text-xs sm:text-sm font-semibold',
           'disabled:opacity-60 disabled:cursor-not-allowed',
           'active:scale-95',
           getButtonClasses(),
           className
         )}
       >
-        {/* Circular Sync Icon - Curved Arrows (like refresh) */}
+        {/* Circular Sync Icon */}
         <svg
           className={cn(
             'w-5 h-5 flex-shrink-0',
-            syncStatus === 'syncing' && 'animate-sync-rotate-slow'
+            isSyncing && 'animate-sync-rotate'
           )}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          strokeWidth="2.2"
+          strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
           aria-hidden="true"
         >
-          {/* Top right curved arrow */}
+          {/* Circular arrows icon */}
           <path d="M23 4v6h-6" />
           <path d="M20.49 15a9 9 0 1 1-2-8.83" />
         </svg>
-
-        {/* Status Badge for Success */}
-        {syncStatus === 'synced' && (
-          <svg
-            className="w-3 h-3 text-emerald-400"
-            viewBox="0 0 16 16"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M3 8L6 11L13 4"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        )}
-
-        <span className={cn(
-          'hidden sm:inline whitespace-nowrap'
-        )}>
-          {displayText()}
-        </span>
       </button>
 
       {/* Sync Popup Modal */}
@@ -246,38 +219,28 @@ export function DataSyncStatus({ className }: DataSyncStatusProps) {
       />
 
       <style>{`
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-4px); }
-          75% { transform: translateX(4px); }
-        }
-
         @keyframes sync-rotate {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
 
-        @keyframes pulse-subtle {
+        @keyframes subtle-pulse {
           0%, 100% {
             opacity: 1;
-            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
           }
           50% {
-            opacity: 0.8;
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+            opacity: 0.9;
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
           }
         }
 
-        .animate-shake {
-          animation: shake 0.4s ease-in-out;
-        }
-
-        .animate-sync-rotate-slow {
+        .animate-sync-rotate {
           animation: sync-rotate 5s linear infinite;
         }
 
-        .animate-pulse-subtle {
-          animation: pulse-subtle 6s ease-in-out infinite;
+        .animate-subtle-pulse {
+          animation: subtle-pulse 6s ease-in-out infinite;
         }
       `}</style>
     </>
