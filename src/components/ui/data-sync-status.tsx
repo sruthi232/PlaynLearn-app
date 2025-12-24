@@ -97,21 +97,25 @@ export function DataSyncStatus({ className }: DataSyncStatusProps) {
       onClick={handleSync}
       disabled={isSyncing}
       className={cn(
-        'flex items-center gap-2',
-        'text-sm font-medium',
-        'transition-opacity duration-200',
-        'disabled:opacity-70',
+        'inline-flex items-center gap-1.5',
+        'px-2 sm:px-3',
+        'h-10 rounded-lg',
+        'text-xs sm:text-sm font-medium',
+        'transition-all duration-200',
+        'hover:bg-muted/50 disabled:opacity-70',
+        'text-muted-foreground',
         className
       )}
+      aria-label="Sync data"
     >
       <RefreshCw
         className={cn(
-          'h-4 w-4',
+          'h-4 w-4 flex-shrink-0',
           isSyncing && 'animate-spin',
           syncSuccess && 'text-green-500'
         )}
       />
-      <span className={cn('text-xs sm:text-sm', textColor)}>
+      <span className={cn('hidden sm:inline whitespace-nowrap', textColor)}>
         {displayText}
       </span>
     </button>
