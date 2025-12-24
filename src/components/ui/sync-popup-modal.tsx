@@ -516,7 +516,7 @@ export function SyncPopupModal({
             opacity: 1;
           }
           50% {
-            opacity: 0.6;
+            opacity: 0.75;
           }
         }
 
