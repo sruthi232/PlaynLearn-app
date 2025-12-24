@@ -269,15 +269,26 @@ export function CustomerFirst({ onComplete, onBack }: { onComplete: (score: numb
     return (
       <div className="fixed inset-0 bg-gradient-to-b from-background to-background/80 flex flex-col p-4 overflow-auto">
         <div className="max-w-2xl mx-auto w-full space-y-6 py-6">
-          {/* Header */}
-          <div className="flex items-center justify-between">
+          {/* Header with Back Button */}
+          <div className="flex items-start justify-between">
             <div>
               <h2 className="font-heading text-2xl font-bold text-foreground">📔 Round {gameState.round} Sales</h2>
               <p className="text-sm text-muted-foreground">Selling handmade notebooks</p>
             </div>
-            <div className="text-right">
-              <div className="text-3xl font-bold text-secondary">💰 ₹{gameState.totalRevenue}</div>
-              <div className="text-xs text-muted-foreground">Total Revenue</div>
+            <div className="text-right flex flex-col items-end gap-4">
+              <div>
+                <div className="text-3xl font-bold text-secondary">💰 ₹{gameState.totalRevenue}</div>
+                <div className="text-xs text-muted-foreground">Total Revenue</div>
+              </div>
+              {onBack && (
+                <button
+                  onClick={handleBackPress}
+                  className="p-2 hover:bg-card rounded-lg transition-all text-muted-foreground hover:text-foreground"
+                  title="Back to Entrepreneurship"
+                >
+                  <ArrowLeft size={20} />
+                </button>
+              )}
             </div>
           </div>
 
