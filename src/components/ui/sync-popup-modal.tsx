@@ -192,7 +192,7 @@ export function SyncPopupModal({
             'p-8 sm:p-10',
             'animate-pop',
             'flex flex-col gap-6',
-            'max-h-[90vh] overflow-y-auto'
+            'max-h-[90vh] overflow-y-auto relative'
           )}
           style={{
             background: 'linear-gradient(180deg, rgba(30,27,60,0.9) 0%, rgba(15,12,30,0.95) 100%)',
@@ -200,6 +200,18 @@ export function SyncPopupModal({
           }}
           onClick={(e) => e.stopPropagation()}
         >
+          {/* Back Button - Top Right Corner */}
+          {!isSyncing && (
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/10 transition-colors duration-200 text-gray-300 hover:text-white"
+              aria-label="Close modal"
+              title="Close"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          )}
+
           {/* Header - Success Icon */}
           {isSuccess && !hasFailedItems && (
             <div className="flex flex-col items-center gap-4">
