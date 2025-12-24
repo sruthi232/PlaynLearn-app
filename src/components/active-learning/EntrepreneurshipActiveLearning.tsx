@@ -8,10 +8,10 @@ interface ModuleProps {
 
 function ActiveLearningModule({ title, goal, children }: ModuleProps) {
   return (
-    <div className="rounded-xl border border-border bg-card p-5">
+    <div className="glass-card rounded-xl border border-border p-5">
       <h4 className="font-heading font-semibold text-foreground mb-1">{title}</h4>
       <p className="text-xs text-muted-foreground mb-4">{goal}</p>
-      <div className="bg-primary/5 rounded-lg p-4 min-h-32">
+      <div className="glass-card rounded-lg p-4 min-h-32 border border-border/50">
         {children}
       </div>
     </div>
@@ -102,7 +102,7 @@ function ProblemSolutionMapper() {
                       ? solution.feasible
                         ? "bg-green-500/20 border border-green-500/50 text-green-600"
                         : "bg-red-500/20 border border-red-500/50 text-red-600"
-                      : "bg-white dark:bg-slate-800 border border-border hover:border-primary/50"
+                      : "glass-card border border-border hover:border-primary/50"
                   }`}
                 >
                   <div className="text-sm font-semibold">{solution.text}</div>
@@ -124,7 +124,7 @@ function ProblemSolutionMapper() {
           </div>
         )}
 
-        <div className="text-xs text-center text-muted-foreground bg-white dark:bg-slate-800 p-2 rounded">
+        <div className="text-xs text-center text-muted-foreground glass-card border border-border/50 p-2 rounded">
           Every business solves a real problem
         </div>
       </div>
@@ -228,7 +228,7 @@ function CostVsProfitSlider() {
         </div>
 
         {/* Summary */}
-        <div className="glass-card bg-card/50 p-3 rounded-lg space-y-1 text-sm border border-border/30">
+        <div className="glass-card p-3 rounded-lg space-y-1 text-sm border border-border/50">
           <div className="flex justify-between">
             <span className="text-muted-foreground">Profit per item:</span>
             <span className="font-bold text-primary">₹{profitPerItem}</span>
@@ -243,7 +243,7 @@ function CostVsProfitSlider() {
           </div>
         </div>
 
-        <div className="text-xs text-center text-muted-foreground bg-white dark:bg-slate-800 p-2 rounded">
+        <div className="text-xs text-center text-muted-foreground glass-card border border-border/50 p-2 rounded">
           Find the right balance between cost, price, and demand
         </div>
       </div>
@@ -311,7 +311,7 @@ function DecisionConsequenceBoard() {
           {decisions.map((decision) => (
             <div
               key={decision.id}
-              className="p-3 rounded-lg border border-border bg-white dark:bg-slate-800"
+              className="p-3 rounded-lg border border-border glass-card"
             >
               <div className="text-sm font-semibold mb-2">{decision.title}</div>
               <div className="text-xs text-muted-foreground mb-2 space-y-1">
@@ -362,7 +362,7 @@ function DecisionConsequenceBoard() {
           </div>
         )}
 
-        <div className="text-xs text-center text-muted-foreground bg-white dark:bg-slate-800 p-2 rounded">
+        <div className="text-xs text-center text-muted-foreground glass-card border border-border/50 p-2 rounded">
           Good decisions help your business grow long-term
         </div>
       </div>

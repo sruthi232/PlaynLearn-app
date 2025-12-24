@@ -63,6 +63,9 @@ const EquationBuilder = lazy(() => import("./pages/student/games/EquationBuilder
 const BiologyExplorer = lazy(() => import("./pages/student/games/BiologyExplorer"));
 const FoodChainHunter = lazy(() => import("./pages/student/games/FoodChainHunter"));
 const SproutHelp = lazy(() => import("./pages/student/games/SproutHelp"));
+const IdeaToIncomePage = lazy(() => import("./pages/student/games/IdeaToIncomePage"));
+const StartupSurvivalPage = lazy(() => import("./pages/student/games/StartupSurvivalPage"));
+const CustomerFirstPage = lazy(() => import("./pages/student/games/CustomerFirstPage"));
 const CycleTap = lazy(() => import("./pages/student/games/CycleTap"));
 const BuildACell = lazy(() => import("./pages/student/games/BuildACell"));
 const GoodGermVsBadGerm = lazy(() => import("./pages/student/games/GoodGermVsBadGerm"));
@@ -351,12 +354,30 @@ const App = () => (
                     <EntrepreneurshipActiveLearningPage />
                   </ProtectedRoute>
                 } />
+
+                {/* Entrepreneurship Games */}
+                <Route path="/student/entrepreneurship/idea-to-income" element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <IdeaToIncomePage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/student/entrepreneurship/startup-survival" element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <StartupSurvivalPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/student/entrepreneurship/customer-first" element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <CustomerFirstPage />
+                  </ProtectedRoute>
+                } />
+
                 <Route path="/learn/village-skills/levels" element={
                   <ProtectedRoute allowedRoles={["student"]}>
                     <VillageSkillsSubjectPage />
                   </ProtectedRoute>
                 } />
-                
+
                 {/* Passive Learning (Reading Pages) */}
                 <Route path="/learn/:subject/read" element={
                   <ProtectedRoute allowedRoles={["student"]}>
