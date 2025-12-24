@@ -141,12 +141,11 @@ export function DataSyncStatus({ className }: DataSyncStatusProps) {
       localStorage.setItem('sync_status', 'synced');
       setSyncStatus('synced');
 
-      // Show green state for 4 seconds then close modal
+      // Keep green state and show modal for full experience, close after 2 seconds
       setTimeout(() => {
         setShowModal(false);
-        setSyncStatus('unsynced');
-        localStorage.setItem('sync_status', 'unsynced');
-      }, 4000);
+        // Keep the green state - don't reset to unsynced
+      }, 2000);
     } catch (error) {
       console.error('Sync failed:', error);
       setSyncStatus('error');
