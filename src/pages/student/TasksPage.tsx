@@ -564,17 +564,17 @@ export default function TasksPage() {
                             <div className="flex items-center gap-2 mb-3 flex-wrap">
                               {taskDef.proofPolicy.type === "photo" && (
                                 <span className="flex items-center gap-1 text-xs text-muted-foreground bg-muted/30 px-2 py-1 rounded">
-                                  📸 Photo
+                                  {t('tasks.proof.photo')}
                                 </span>
                               )}
                               {taskDef.proofPolicy.type === "text" && (
                                 <span className="flex items-center gap-1 text-xs text-muted-foreground bg-muted/30 px-2 py-1 rounded">
-                                  ✍️ Write
+                                  {t('tasks.proof.text')}
                                 </span>
                               )}
                               {taskDef.proofPolicy.type === "auto" && (
                                 <span className="flex items-center gap-1 text-xs text-secondary bg-secondary/10 px-2 py-1 rounded">
-                                  ✓ Auto
+                                  {t('tasks.proof.auto')}
                                 </span>
                               )}
                             </div>
