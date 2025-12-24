@@ -564,7 +564,16 @@ export function CustomerFirst({ onComplete, onBack }: { onComplete: (score: numb
     const finalScore = Math.floor((avgSatisfaction * 100) + (gameState.totalRevenue / 10));
 
     return (
-      <div className="fixed inset-0 bg-gradient-to-b from-background to-background/80 flex items-center justify-center p-4">
+      <div className="fixed inset-0 bg-gradient-to-b from-background to-background/80 flex items-center justify-center p-4 relative">
+        {onBack && (
+          <button
+            onClick={() => onBack()}
+            className="absolute top-4 left-4 p-2 hover:bg-card rounded-lg transition-all text-muted-foreground hover:text-foreground"
+            title="Back to Entrepreneurship"
+          >
+            <ArrowLeft size={24} />
+          </button>
+        )}
         <div className="max-w-md w-full space-y-6">
           <div className="text-center">
             <div className="text-6xl mb-4 animate-bounce">🎉</div>
