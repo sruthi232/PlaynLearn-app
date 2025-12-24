@@ -84,8 +84,8 @@ export default function PhysicsSubjectPage() {
                 <Atom className="h-8 w-8 text-primary" />
               </div>
               <div className="flex-1">
-                <h2 className="font-heading text-2xl font-bold text-foreground">Physics</h2>
-                <p className="text-sm text-muted-foreground">Explore the laws of nature</p>
+                <h2 className="font-heading text-2xl font-bold text-foreground">{t('subjects.physics')}</h2>
+                <p className="text-sm text-muted-foreground">{t('subjects.physics_description')}</p>
               </div>
             </div>
             <div className="space-y-2">
