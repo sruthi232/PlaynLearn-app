@@ -1,14 +1,15 @@
+import { useTranslation } from "react-i18next";
 import { AppLayout } from "@/components/navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AnimatedProgress } from "@/components/ui/animated-progress";
 import { GameBadge } from "@/components/ui/game-badge";
-import { 
-  Atom, 
-  Lock, 
-  Play, 
-  Star, 
+import {
+  Atom,
+  Lock,
+  Play,
+  Star,
   Trophy,
   Zap,
   CheckCircle2,
@@ -67,12 +68,13 @@ const levels: GameLevel[] = [
 ];
 
 export default function PhysicsSubjectPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const totalProgress = 65;
   const completedLevels = levels.filter(l => l.status === "completed").length;
 
   return (
-    <AppLayout role="student" playCoins={1250} title="Physics">
+    <AppLayout role="student" playCoins={1250} title={t('subjects.physics')}>
       <div className="px-4 py-6 pb-24">
         {/* Subject Header */}
         <div className="mb-6 slide-up">
@@ -82,8 +84,8 @@ export default function PhysicsSubjectPage() {
                 <Atom className="h-8 w-8 text-primary" />
               </div>
               <div className="flex-1">
-                <h2 className="font-heading text-2xl font-bold text-foreground">Physics</h2>
-                <p className="text-sm text-muted-foreground">Explore the laws of nature</p>
+                <h2 className="font-heading text-2xl font-bold text-foreground">{t('subjects.physics')}</h2>
+                <p className="text-sm text-muted-foreground">{t('subjects.physics_description')}</p>
               </div>
             </div>
             <div className="space-y-2">
@@ -93,10 +95,10 @@ export default function PhysicsSubjectPage() {
               </div>
               <AnimatedProgress value={totalProgress} variant="default" />
               <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span>{completedLevels}/{levels.length} Levels Complete</span>
+                <span>{completedLevels}/{levels.length} {t('learning.active')}</span>
                 <GameBadge variant="primary" size="sm">
                   <Trophy className="h-3 w-3 mr-1" />
-                  Intermediate
+                  {t('common.intermediate')}
                 </GameBadge>
               </div>
             </div>
@@ -107,7 +109,7 @@ export default function PhysicsSubjectPage() {
         <div className="mb-4">
           <h3 className="font-heading font-semibold text-foreground mb-3 flex items-center gap-2">
             <Zap className="h-5 w-5 text-accent" />
-            Game Levels
+            {t('common.gameLevels')}
           </h3>
         </div>
 

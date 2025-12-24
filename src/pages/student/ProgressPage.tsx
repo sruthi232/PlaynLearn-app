@@ -135,7 +135,7 @@ export default function ProgressPage() {
         <div className="mb-6 slide-up" style={{ animationDelay: "100ms" }}>
           <div className="flex items-center justify-between mb-3">
             <h3 className="font-heading font-semibold text-foreground">Subject Progress</h3>
-            <img src={mascotPointing} alt="Mascot" className="w-12 h-12 object-contain" />
+            <img src="https://cdn.builder.io/api/v1/image/assets%2Fe1d336b7ba7f491d80ce2b7cecac66a5%2F82f232a2071044f6a443a69ee79839f2" alt="Mascot" className="w-12 h-12 object-contain" />
           </div>
           <div className="space-y-3">
             {subjectProgress.map((subject, index) => (

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { AppLayout } from "@/components/navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -88,12 +89,13 @@ const levels: GameLevel[] = [
 ];
 
 export default function ChemistrySubjectPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const totalProgress = 0; // Reset for new user
   const completedLevels = levels.filter(l => l.status === "completed").length;
 
   return (
-    <AppLayout role="student" playCoins={1250} title="Chemistry">
+    <AppLayout role="student" playCoins={1250} title={t('subjects.chemistry')}>
       <div className="px-4 py-6 pb-24">
         {/* Subject Header */}
         <div className="mb-6 slide-up">
@@ -103,8 +105,8 @@ export default function ChemistrySubjectPage() {
                 <FlaskConical className="h-8 w-8 text-secondary" />
               </div>
               <div className="flex-1">
-                <h2 className="font-heading text-2xl font-bold text-foreground">Chemistry</h2>
-                <p className="text-sm text-muted-foreground">Mix, react, and discover</p>
+                <h2 className="font-heading text-2xl font-bold text-foreground">{t('subjects.chemistry')}</h2>
+                <p className="text-sm text-muted-foreground">{t('subjects.chemistry_description')}</p>
               </div>
             </div>
             <div className="space-y-2">
@@ -114,10 +116,10 @@ export default function ChemistrySubjectPage() {
               </div>
               <AnimatedProgress value={totalProgress} variant="success" />
               <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span>{completedLevels}/{levels.length} Levels Complete</span>
+                <span>{completedLevels}/{levels.length} {t('common.complete')}</span>
                 <GameBadge variant="secondary" size="sm">
                   <Trophy className="h-3 w-3 mr-1" />
-                  Beginner
+                  {t('common.beginner')}
                 </GameBadge>
               </div>
             </div>
@@ -128,7 +130,7 @@ export default function ChemistrySubjectPage() {
         <div className="mb-4">
           <h3 className="font-heading font-semibold text-foreground mb-3 flex items-center gap-2">
             <Zap className="h-5 w-5 text-accent" />
-            Game Levels
+            {t('common.gameLevels')}
           </h3>
         </div>
 

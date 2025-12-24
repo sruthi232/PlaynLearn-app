@@ -139,11 +139,6 @@ export default function TasksPage() {
   const getCategoryLabel = (category: string) => {
     return t(`tasks.categories.${category}`, category);
   };
-
-  // Get translated status label
-  const getStatusLabel = (status: string) => {
-    return t(`tasks.status.${status}`, status);
-  };
   const [showProofModal, setShowProofModal] = useState(false);
   const [showTaskDetail, setShowTaskDetail] = useState(false);
   const [activeFilter, setActiveFilter] = useState<TaskCategory | "all">("all");
@@ -412,13 +407,13 @@ export default function TasksPage() {
           {selectedStatusFilter !== "all" && (
             <div className="flex items-center justify-between px-1 py-2 border-b border-border/30">
               <p className="text-sm font-semibold text-foreground">
-                📋 Showing: {getStatusLabel()}
+                {t('tasks.showing')}: {getStatusLabel()}
               </p>
               <button
                 onClick={() => setSelectedStatusFilter("all")}
                 className="text-xs text-muted-foreground hover:text-primary transition-colors"
               >
-                View All
+                {t('tasks.viewAll')}
               </button>
             </div>
           )}
@@ -429,19 +424,19 @@ export default function TasksPage() {
               <div className="glass-card border border-border rounded-lg p-8 text-center">
                 <Award className="h-12 w-12 text-muted-foreground/30 mx-auto mb-3" />
                 <p className="font-medium text-foreground mb-1">
-                  {selectedStatusFilter === "completed" && "No completed tasks yet"}
-                  {selectedStatusFilter === "active" && "No active tasks"}
-                  {selectedStatusFilter === "available" && "No available tasks"}
-                  {selectedStatusFilter === "all" && "No tasks available"}
+                  {selectedStatusFilter === "completed" && t('tasks.emptyCompleted')}
+                  {selectedStatusFilter === "active" && t('tasks.emptyActive')}
+                  {selectedStatusFilter === "available" && t('tasks.emptyAvailable')}
+                  {selectedStatusFilter === "all" && t('tasks.emptyAll')}
                 </p>
                 <p className="text-sm text-muted-foreground">
                   {selectedStatusFilter !== "all" && selectedCategory !== "all"
-                    ? "Try selecting a different category"
+                    ? t('tasks.tryDifferentCategory')
                     : selectedStatusFilter === "completed"
-                    ? "Complete tasks to earn rewards!"
+                    ? t('tasks.earnRewards')
                     : selectedStatusFilter === "available"
-                    ? "Check back soon for more tasks"
-                    : "Start an available task to get going!"}
+                    ? t('tasks.checkSoon')
+                    : t('tasks.startTask')}
                 </p>
               </div>
             ) : (
@@ -532,19 +527,19 @@ export default function TasksPage() {
                               {completionStatus === "verified" && (
                                 <>
                                   <CheckCircle2 className="h-4 w-4" />
-                                  ✅ Verified by Teacher
+                                  {t('tasks.verifiedByTeacher')}
                                 </>
                               )}
                               {completionStatus === "pending" && (
                                 <>
                                   <Clock className="h-4 w-4" />
-                                  ⏳ Pending Verification
+                                  {t('tasks.pendingVerification')}
                                 </>
                               )}
                               {completionStatus === "rejected" && (
                                 <>
                                   <AlertCircle className="h-4 w-4" />
-                                  ❌ Rejected - Please retry
+                                  {t('tasks.rejectedRetry')}
                                 </>
                               )}
                             </div>
@@ -554,13 +549,13 @@ export default function TasksPage() {
                           {isActive && (
                             <div className="mb-3 space-y-1">
                               <div className="flex items-center justify-between text-xs">
-                                <span className="font-medium text-foreground">Progress</span>
+                                <span className="font-medium text-foreground">{t('tasks.progress')}</span>
                                 <span className="text-muted-foreground">65%</span>
                               </div>
                               <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
                                 <div className="h-full bg-gradient-to-r from-accent to-accent/80 rounded-full" style={{ width: "65%" }}></div>
                               </div>
-                              <p className="text-xs text-muted-foreground">In progress...</p>
+                              <p className="text-xs text-muted-foreground">{t('tasks.inProgress')}</p>
                             </div>
                           )}
 
@@ -569,17 +564,17 @@ export default function TasksPage() {
                             <div className="flex items-center gap-2 mb-3 flex-wrap">
                               {taskDef.proofPolicy.type === "photo" && (
                                 <span className="flex items-center gap-1 text-xs text-muted-foreground bg-muted/30 px-2 py-1 rounded">
-                                  📸 Photo
+                                  {t('tasks.proof.photo')}
                                 </span>
                               )}
                               {taskDef.proofPolicy.type === "text" && (
                                 <span className="flex items-center gap-1 text-xs text-muted-foreground bg-muted/30 px-2 py-1 rounded">
-                                  ✍️ Write
+                                  {t('tasks.proof.text')}
                                 </span>
                               )}
                               {taskDef.proofPolicy.type === "auto" && (
                                 <span className="flex items-center gap-1 text-xs text-secondary bg-secondary/10 px-2 py-1 rounded">
-                                  ✓ Auto
+                                  {t('tasks.proof.auto')}
                                 </span>
                               )}
                             </div>
