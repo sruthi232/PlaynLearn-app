@@ -176,7 +176,40 @@
     "noRewardsInCategory": "No rewards in this category yet",
     "keepLearningKeepEarning": "Keep Learning, Keep Earning!",
     "redeemSuccess": "🎉 You redeemed {{name}}!",
-    "needMoreCoins": "Need {{needed}} more EduCoins!"
+    "needMoreCoins": "Need {{needed}} more EduCoins!",
+    "almostThere": "Almost there!",
+    "locked": "Locked",
+    "redeem": "Redeem",
+    "earn": "Earn",
+    "more": "more",
+    "transactionHistory": "Transaction History",
+    "noTransactions": "No transactions yet",
+    "completeTasksToEarnCoins": "Complete games and tasks to earn EduCoins!",
+    "backToRewards": "Back to Rewards",
+    "viewHistory": "View History",
+    "motivationalMessage": "Every task, game, and achievement brings you closer to rewards that matter—for you, your family, and your village.",
+    "filters": {
+      "all": "All Rewards",
+      "stationery": "Stationery",
+      "study_purpose": "Study Purpose",
+      "household_needs": "Household Needs",
+      "farming_needs": "Farming Needs",
+      "premium": "Premium",
+      "study_kits": "Study Kits",
+      "upskilling_books": "Upskilling Books",
+      "community_building": "Community Building"
+    },
+    "filterDescriptions": {
+      "all": "Browse all available rewards",
+      "stationery": "Quality writing & drawing supplies",
+      "study_purpose": "Workspace & study essentials",
+      "household_needs": "Daily essentials for families",
+      "farming_needs": "Tools for agricultural success",
+      "premium": "Aspirational long-term goals",
+      "study_kits": "Hands-on learning kits",
+      "upskilling_books": "Knowledge for growth",
+      "community_building": "Assets for village development"
+    }
   },
   "physics": {
     "title": "Physics",
