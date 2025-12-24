@@ -61,21 +61,21 @@ export function SyncPopupModal({
     }
   };
 
-  return (
+  const modalContent = (
     <>
       <ConfettiEffect trigger={showConfetti} />
-      
+
       {/* Backdrop */}
       <div
-        className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 top-0 left-0 right-0 bottom-0 z-[100] bg-black/40 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
-      {/* Centered Modal */}
-      <div className="fixed inset-0 z-[101] flex items-center justify-center p-4 pointer-events-none overflow-y-auto">
+      {/* Centered Modal - positioned absolutely in viewport center */}
+      <div className="fixed inset-0 top-0 left-0 right-0 bottom-0 z-[101] flex items-center justify-center p-4 pointer-events-none">
         <div
           className={cn(
-            'w-full max-w-md pointer-events-auto rounded-2xl my-auto',
+            'w-full max-w-md pointer-events-auto rounded-2xl',
             'bg-gradient-to-br from-slate-900/95 to-slate-800/95',
             'backdrop-blur-xl border border-white/10',
             'shadow-2xl',
