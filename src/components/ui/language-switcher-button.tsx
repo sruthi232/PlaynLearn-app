@@ -16,7 +16,7 @@ export function LanguageSwitcherButton({ className }: LanguageSwitcherButtonProp
       <Button
         variant="ghost"
         size="icon"
-        className={cn('h-10 w-10', className)}
+        className={cn('h-10 w-10 sm:mt-0.5', className)}
         onClick={() => setIsLanguageSelectorOpen(true)}
         title="Change Language"
       >
