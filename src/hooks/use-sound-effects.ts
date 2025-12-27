@@ -117,6 +117,22 @@ export function useSoundEffects() {
     });
   }, [playTone]);
 
+  const playQRRedemption = useCallback((options?: SoundOptions) => {
+    const { volume = 0.25 } = options || {};
+    // Premium QR redemption sound - 3 ascending tones (Google Pay / Apple Pay style)
+    // Confident, trustworthy, celebratory
+    // Total duration: ~400ms
+    const notes = [
+      { freq: 587.33, duration: 0.12, delay: 0 },    // D5 - confident, warm
+      { freq: 783.99, duration: 0.12, delay: 130 },  // G5 - ascending
+      { freq: 1046.50, duration: 0.16, delay: 260 }, // C6 - triumph
+    ];
+
+    notes.forEach(({ freq, duration, delay }) => {
+      setTimeout(() => playTone(freq, duration, "sine", volume), delay);
+    });
+  }, [playTone]);
+
   return {
     playCorrect,
     playIncorrect,
@@ -125,6 +141,7 @@ export function useSoundEffects() {
     playAchievement,
     playCoins,
     playSyncSuccess,
+    playQRRedemption,
     playTone,
   };
 }

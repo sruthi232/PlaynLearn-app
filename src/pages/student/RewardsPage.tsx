@@ -13,7 +13,7 @@ import {
   Loader2,
   Zap,
 } from "lucide-react";
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, Suspense, lazy } from "react";
 import { useWallet } from "@/contexts/WalletContext";
 import { toast } from "sonner";
 import { useSoundEffects } from "@/hooks/use-sound-effects";
@@ -28,6 +28,22 @@ import {
 } from "@/data/comprehensive-rewards-catalog";
 import mascotCelebrate from "@/assets/mascot-celebrate.png";
 import mascotExcited from "@/assets/mascot-excited.png";
+import { RedemptionConfirmationModal } from "@/components/student/RedemptionConfirmationModal";
+import { QRGenerationLoading } from "@/components/student/QRGenerationLoading";
+import { QRResultScreen } from "@/components/student/QRResultScreen";
+import { MyRedeemedRewardsScreen } from "@/components/student/MyRedeemedRewardsScreen";
+import { createRedemptionData } from "@/lib/qr-utils";
+import type { RedemptionData } from "@/lib/qr-utils";
+
+// Lazy load QRCode component since it depends on qrcode.react
+let QRCodeComponent: any = null;
+try {
+  const QRCode = require("qrcode.react").default;
+  QRCodeComponent = QRCode;
+} catch (e) {
+  // qrcode.react not installed yet
+  QRCodeComponent = null;
+}
 
 // Filter list in exact order as specified
 const FILTER_ORDER: FilterType[] = [
@@ -52,6 +68,16 @@ export default function RewardsPage() {
   const [isSpending, setIsSpending] = useState(false);
   const filterScrollRef = useRef<HTMLDivElement>(null);
 
+  // QR Redemption Flow States
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showLoadingModal, setShowLoadingModal] = useState(false);
+  const [showQRResultScreen, setShowQRResultScreen] = useState(false);
+  const [showMyRewardsScreen, setShowMyRewardsScreen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<(typeof comprehensiveRewardsCatalog)[0] | null>(null);
+  const [generatedRedemption, setGeneratedRedemption] = useState<RedemptionData | null>(null);
+  const [savedRedemptions, setSavedRedemptions] = useState<RedemptionData[]>([]);
+  const [isOnline, setIsOnline] = useState(typeof navigator !== 'undefined' && navigator.onLine);
+
   const { balance, earned, spent, transactions, addTransaction } = useWallet();
   const { playSuccess } = useSoundEffects();
 
@@ -62,24 +88,92 @@ export default function RewardsPage() {
     return getProductsByFilter(activeFilter);
   }, [activeFilter]);
 
-  const handleRedeem = (product: (typeof comprehensiveRewardsCatalog)[0]) => {
-    if (currentBalance >= product.educoinsCost) {
-      setIsSpending(true);
+  // Handle redemption confirmation - shows confirmation modal
+  const handleRedeemClick = (product: (typeof comprehensiveRewardsCatalog)[0]) => {
+    setSelectedProduct(product);
+    setShowConfirmationModal(true);
+  };
 
-      // Update wallet with redemption
-      addTransaction(product.educoinsCost, "spend", `Redeemed: ${product.name}`);
+  // Handle confirmation - starts loading sequence
+  const handleConfirmRedemption = async () => {
+    if (!selectedProduct) return;
+
+    setShowConfirmationModal(false);
+    setShowLoadingModal(true);
+
+    // Simulate 5-second QR generation process
+    setTimeout(() => {
+      setShowLoadingModal(false);
+
+      // Create redemption data
+      const redemptionData = createRedemptionData(
+        "student_" + Date.now(), // Placeholder student ID
+        selectedProduct.id,
+        selectedProduct.name,
+        selectedProduct.educoinsCost
+      );
+
+      setGeneratedRedemption(redemptionData);
+      // Show QR Result Screen instead of modal
+      setShowQRResultScreen(true);
+    }, 5000);
+  };
+
+  // Handle saving redemption to wallet
+  const handleSaveToWallet = () => {
+    if (generatedRedemption) {
+      // Deduct coins from wallet
+      addTransaction(
+        generatedRedemption.coinsRedeemed,
+        "spend",
+        `Redeemed: ${generatedRedemption.productName}`
+      );
+
+      // Save to redemptions list
+      setSavedRedemptions([...savedRedemptions, generatedRedemption]);
 
       playSuccess?.();
-      setRedeemedItem(product.name);
-      setRedeemedPrice(product.educoinsCost);
-      setShowSuccess(true);
-      setIsSpending(false);
-      setTimeout(() => setShowSuccess(false), 4000);
-      toast.success(t('rewards.redeemSuccess', { name: product.name }));
-    } else {
-      const needed = coinsToUnlock(currentBalance, product.educoinsCost);
-      toast.error(t('rewards.needMoreCoins', { needed }));
+      toast.success(
+        t("redemption.savedToWallet", {
+          defaultValue: "Redemption saved to My Rewards!",
+        })
+      );
+
+      // Close QR screen and stay in marketplace
+      setShowQRResultScreen(false);
+      setGeneratedRedemption(null);
+      setSelectedProduct(null);
     }
+  };
+
+  // Handle back from QR Result Screen
+  const handleBackFromQR = () => {
+    setShowQRResultScreen(false);
+    setGeneratedRedemption(null);
+    setSelectedProduct(null);
+  };
+
+  // Handle opening My Rewards wallet
+  const handleOpenMyRewards = () => {
+    setShowMyRewardsScreen(true);
+  };
+
+  // Handle back from My Rewards
+  const handleBackFromMyRewards = () => {
+    setShowMyRewardsScreen(false);
+  };
+
+  // Handle viewing QR from wallet
+  const handleViewQRFromWallet = (redemption: RedemptionData) => {
+    setGeneratedRedemption(redemption);
+    setShowQRResultScreen(true);
+    setShowMyRewardsScreen(false);
+  };
+
+  // Legacy handleRedeem for backward compatibility (simple redemption)
+  const handleRedeem = (product: (typeof comprehensiveRewardsCatalog)[0]) => {
+    // Now opens QR redemption flow instead
+    handleRedeemClick(product);
   };
 
   return (
@@ -298,6 +392,46 @@ export default function RewardsPage() {
           }
         }
       `}</style>
+      {/* ========== QR REDEMPTION FLOW ========== */}
+      {/* Confirmation Modal */}
+      {selectedProduct && (
+        <RedemptionConfirmationModal
+          open={showConfirmationModal}
+          onClose={() => {
+            setShowConfirmationModal(false);
+            setSelectedProduct(null);
+          }}
+          onConfirm={handleConfirmRedemption}
+          product={selectedProduct}
+          currentBalance={currentBalance}
+          isLoading={false}
+        />
+      )}
+
+      {/* Loading Animation */}
+      <QRGenerationLoading isOpen={showLoadingModal} />
+
+      {/* QR Result Screen - Full Page */}
+      {showQRResultScreen && generatedRedemption && (
+        <QRResultScreen
+          redemptionData={generatedRedemption}
+          onBack={handleBackFromQR}
+          onSaveToWallet={handleSaveToWallet}
+          QRCodeComponent={QRCodeComponent}
+          isOnline={isOnline}
+        />
+      )}
+
+      {/* My Redeemed Rewards Screen - QR Wallet */}
+      {showMyRewardsScreen && (
+        <MyRedeemedRewardsScreen
+          redemptions={savedRedemptions}
+          onBack={handleBackFromMyRewards}
+          onViewQR={handleViewQRFromWallet}
+          QRCodeComponent={QRCodeComponent}
+        />
+      )}
+
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 px-4 py-6 pb-28 relative overflow-hidden">
         {/* Animated Background Decorations */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-40 accent-blur-bg" />
@@ -449,9 +583,10 @@ export default function RewardsPage() {
             <div className="mb-6 slide-up" style={{ animationDelay: "50ms" }}>
               <Button
                 size="lg"
+                onClick={handleOpenMyRewards}
                 className="w-full bg-gradient-to-r from-primary to-primary/80 text-sm"
               >
-                {t('rewards.redeemRewards')}
+                {t('rewards.redeemRewards')} {savedRedemptions.length > 0 && `(${savedRedemptions.length})`}
               </Button>
             </div>
 
