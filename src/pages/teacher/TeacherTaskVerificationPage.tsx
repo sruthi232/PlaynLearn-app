@@ -282,37 +282,42 @@ export default function TeacherTaskVerificationPage() {
                 </div>
 
                 {/* Attachments */}
-                <div className="mb-4 flex gap-2">
-                  {task.hasPhoto && (
-                    <Button variant="outline" size="sm" className="gap-1">
-                      <Image className="h-4 w-4" />
-                      View Photo
-                    </Button>
-                  )}
-                  {task.hasAudio && (
-                    <Button variant="outline" size="sm" className="gap-1">
-                      <Mic className="h-4 w-4" />
-                      Play Audio
-                    </Button>
-                  )}
-                </div>
+                {(task.hasPhoto || task.hasAudio) && (
+                  <div className="mb-4 flex gap-2">
+                    {task.hasPhoto && (
+                      <Button variant="outline" size="sm" className="gap-1">
+                        <Image className="h-4 w-4" />
+                        {t("teacher.viewPhoto", { defaultValue: "View Photo" })}
+                      </Button>
+                    )}
+                  </div>
+                )}
 
                 {/* Actions */}
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
-                    className="flex-1 gap-1 text-destructive hover:bg-destructive hover:text-destructive-foreground"
-                    onClick={() => handleReject(task.id)}
+                    className="flex-1"
+                    onClick={() => handleViewDetails(task)}
                   >
-                    <X className="h-4 w-4" />
-                    Reject
+                    <Eye className="h-4 w-4 mr-2" />
+                    {t("teacher.viewDetails", { defaultValue: "View Details" })}
                   </Button>
                   <Button
-                    className="flex-1 gap-1 bg-secondary hover:bg-secondary/90"
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => handleRejectClick(task)}
+                    disabled={isProcessing}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    size="sm"
+                    className="bg-secondary hover:bg-secondary/90"
                     onClick={() => handleApprove(task.id)}
+                    disabled={isProcessing}
                   >
                     <Check className="h-4 w-4" />
-                    Approve
                   </Button>
                 </div>
               </div>
