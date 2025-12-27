@@ -71,10 +71,12 @@ export default function RewardsPage() {
   // QR Redemption Flow States
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [showLoadingModal, setShowLoadingModal] = useState(false);
-  const [showQRSuccessModal, setShowQRSuccessModal] = useState(false);
+  const [showQRResultScreen, setShowQRResultScreen] = useState(false);
+  const [showMyRewardsScreen, setShowMyRewardsScreen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<(typeof comprehensiveRewardsCatalog)[0] | null>(null);
   const [generatedRedemption, setGeneratedRedemption] = useState<RedemptionData | null>(null);
   const [savedRedemptions, setSavedRedemptions] = useState<RedemptionData[]>([]);
+  const [isOnline, setIsOnline] = useState(typeof navigator !== 'undefined' && navigator.onLine);
 
   const { balance, earned, spent, transactions, addTransaction } = useWallet();
   const { playSuccess } = useSoundEffects();
