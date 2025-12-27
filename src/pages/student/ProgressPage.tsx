@@ -92,20 +92,20 @@ export default function ProgressPage() {
           </div>
         </div>
 
-        {/* Leaderboard Link Card */}
-        <Card 
-          className="glass-card border border-primary/30 p-4 mb-6 slide-up cursor-pointer hover:border-primary/50 transition-all"
+        {/* Village Impact Board Link Card */}
+        <Card
+          className="glass-card border border-accent/30 p-4 mb-6 slide-up cursor-pointer hover:border-accent/50 transition-all"
           style={{ animationDelay: "50ms" }}
           onClick={() => navigate("/student/leaderboard")}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-accent/60 flex items-center justify-center">
-                <Crown className="h-6 w-6 text-accent-foreground" />
+                <Home className="h-6 w-6 text-accent-foreground" />
               </div>
               <div>
-                <h3 className="font-heading font-bold text-foreground">Village Leaderboard</h3>
-                <p className="text-sm text-muted-foreground">See top learners in your village</p>
+                <h3 className="font-heading font-bold text-foreground">Village Impact Board</h3>
+                <p className="text-sm text-muted-foreground">Your village's learning journey</p>
               </div>
             </div>
             <ChevronRight className="h-5 w-5 text-muted-foreground" />
