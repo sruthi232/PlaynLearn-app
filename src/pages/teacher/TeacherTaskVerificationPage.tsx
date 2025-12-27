@@ -22,10 +22,16 @@ interface Task {
   avatar: string;
   task: string;
   type: "village" | "academic" | "skill";
+  category: "family" | "village" | "subject";
   submittedAt: string;
   coins: number;
   hasPhoto: boolean;
   hasAudio: boolean;
+  instructions?: string;
+  proofType?: "photo" | "text";
+  proofContent?: string;
+  proofUrl?: string;
+  reflection?: string;
 }
 
 const pendingTasks: Task[] = [
@@ -35,10 +41,15 @@ const pendingTasks: Task[] = [
     avatar: "PS",
     task: "Check home electrical safety",
     type: "village",
+    category: "village",
     submittedAt: "10 min ago",
     coins: 50,
     hasPhoto: true,
     hasAudio: true,
+    instructions: "Visit 3 homes and check for basic electrical safety. Take photos and note any hazards.",
+    proofType: "photo",
+    proofUrl: "https://via.placeholder.com/300x400",
+    reflection: "I found several homes with unsafe wiring and helped families understand the risks.",
   },
   {
     id: "2",
@@ -46,10 +57,15 @@ const pendingTasks: Task[] = [
     avatar: "AK",
     task: "Create family monthly budget",
     type: "skill",
+    category: "family",
     submittedAt: "1 hour ago",
     coins: 40,
     hasPhoto: true,
     hasAudio: false,
+    instructions: "Work with your family to create a monthly budget. Document income, expenses, and savings goals.",
+    proofType: "photo",
+    proofUrl: "https://via.placeholder.com/300x400",
+    reflection: "My family and I created a budget together. It helped us understand where our money goes.",
   },
   {
     id: "3",
@@ -57,10 +73,15 @@ const pendingTasks: Task[] = [
     avatar: "RP",
     task: "Physics Chapter 5 Quiz",
     type: "academic",
+    category: "subject",
     submittedAt: "2 hours ago",
     coins: 30,
     hasPhoto: false,
     hasAudio: false,
+    instructions: "Complete the Physics Chapter 5 quiz covering motion and forces. Score at least 70%.",
+    proofType: "text",
+    proofContent: "Quiz Score: 85/100\n\nCorrect Answers: 17/20\nTime: 25 minutes\nTopics Mastered: Forces, Motion, Energy",
+    reflection: "I studied hard and understood most of the concepts. I need to review the section on kinetic energy.",
   },
   {
     id: "4",
@@ -68,10 +89,15 @@ const pendingTasks: Task[] = [
     avatar: "MS",
     task: "Help with water conservation",
     type: "village",
+    category: "village",
     submittedAt: "3 hours ago",
     coins: 60,
     hasPhoto: true,
     hasAudio: true,
+    instructions: "Lead a community activity to raise awareness about water conservation. Document the activity with photos.",
+    proofType: "photo",
+    proofUrl: "https://via.placeholder.com/300x400",
+    reflection: "I organized a session for 25 people in my village about saving water. Everyone was engaged and interested.",
   },
 ];
 
