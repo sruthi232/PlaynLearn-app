@@ -49,29 +49,32 @@ export function RedemptionConfirmationModal({
 }: RedemptionConfirmationModalProps) {
   const { t } = useTranslation();
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showAnimatedLoading, setShowAnimatedLoading] = useState(false);
   const canAfford = currentBalance >= product.educoinsCost;
 
-  // Handle Generate QR click - generates QR inside modal
+  // Handle Generate QR click - shows animated loading
   const handleGenerateQRClick = async () => {
     setIsGenerating(true);
+    setShowAnimatedLoading(true);
+  };
 
-    // Simulate 5-second QR generation process
-    setTimeout(() => {
-      // Create redemption data
-      const redemptionData = createRedemptionData(
-        "student_" + Date.now(), // Placeholder student ID
-        product.id,
-        product.name,
-        product.educoinsCost
-      );
+  // Handle animated loading completion
+  const handleAnimationComplete = () => {
+    // Create redemption data after animation completes
+    const redemptionData = createRedemptionData(
+      "student_" + Date.now(), // Placeholder student ID
+      product.id,
+      product.name,
+      product.educoinsCost
+    );
 
-      // Notify parent about the generated redemption
-      onGenerateQR?.(redemptionData);
+    // Notify parent about the generated redemption
+    onGenerateQR?.(redemptionData);
 
-      // Close this modal
-      onClose();
-      setIsGenerating(false);
-    }, 5000);
+    // Close this modal and animation
+    setShowAnimatedLoading(false);
+    setIsGenerating(false);
+    onClose();
   };
 
   return (
