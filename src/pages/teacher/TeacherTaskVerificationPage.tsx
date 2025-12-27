@@ -176,12 +176,51 @@ export default function TeacherTaskVerificationPage() {
   };
 
   return (
-    <AppLayout role="teacher" title="Task Verification">
+    <AppLayout role="teacher" title={t("teacher.taskVerification", { defaultValue: "Task Verification" })}>
       <div className="px-4 py-6">
+        {/* Modals */}
+        <TaskDetailModal
+          task={
+            selectedTask
+              ? {
+                  id: selectedTask.id,
+                  title: selectedTask.task,
+                  category: selectedTask.category,
+                  instructions: selectedTask.instructions || "",
+                  coinReward: selectedTask.coins,
+                  submittedAt: selectedTask.submittedAt,
+                  studentName: selectedTask.student,
+                  proofType: selectedTask.proofType || "text",
+                  proofContent: selectedTask.proofContent || "",
+                  proofUrl: selectedTask.proofUrl,
+                  reflection: selectedTask.reflection || "",
+                  status: "pending",
+                }
+              : null
+          }
+          open={showDetailModal}
+          onClose={() => setShowDetailModal(false)}
+          onVerify={() => selectedTask && handleApprove(selectedTask.id)}
+          onReject={() => selectedTask && handleRejectClick(selectedTask)}
+        />
+
+        <RejectionReasonModal
+          taskTitle={selectedTask?.task || ""}
+          studentName={selectedTask?.student || ""}
+          open={showRejectionModal}
+          onClose={() => setShowRejectionModal(false)}
+          onSubmit={handleRejectSubmit}
+          isLoading={isProcessing}
+        />
+
         {/* Header */}
         <div className="mb-6 slide-up">
-          <h2 className="font-heading text-2xl font-bold">Task Verification</h2>
-          <p className="text-muted-foreground">Review student submissions</p>
+          <h2 className="font-heading text-2xl font-bold">
+            {t("teacher.taskVerification", { defaultValue: "Task Verification" })}
+          </h2>
+          <p className="text-muted-foreground">
+            {t("teacher.reviewSubmissions", { defaultValue: "Review student submissions" })}
+          </p>
         </div>
 
         {/* Stats */}
