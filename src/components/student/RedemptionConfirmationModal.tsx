@@ -18,6 +18,7 @@ import { AlertCircle, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { createRedemptionData } from "@/lib/qr-utils";
+import { QRGenerationAnimated } from "./QRGenerationAnimated";
 
 interface Product {
   id: string;
