@@ -100,6 +100,14 @@ export function RedemptionQRScanner({
 
       setActionResult(approved ? "verified" : "rejected");
       setStep("result");
+
+      // Play success sound and show animation
+      if (approved) {
+        setTimeout(() => {
+          setShowResultAnimation(true);
+          playQRRedemption?.();
+        }, 100);
+      }
     } catch (error) {
       toast.error(
         t("teacher.verificationFailed", {
