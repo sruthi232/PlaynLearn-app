@@ -60,9 +60,9 @@ export function createRedemptionData(
 ): RedemptionData {
   const now = Date.now();
   const expiryDate = now + expiryDays * 24 * 60 * 60 * 1000;
-  
+
   return {
-    id: uuidv4() as unknown as string, // For tracking
+    id: generateUniqueId(),
     studentId,
     productId,
     productName,
