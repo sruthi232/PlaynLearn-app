@@ -4,7 +4,7 @@
  * Simple offline-capable interface for village settings
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Dialog,
@@ -17,6 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { RewardVerificationCard } from "./RewardVerificationCard";
 import {
   Camera,
   CheckCircle2,
@@ -27,6 +28,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { validateRedemptionQR } from "@/lib/qr-utils";
+import { useSoundEffects } from "@/hooks/use-sound-effects";
 import type { RedemptionData } from "@/lib/qr-utils";
 
 interface ScannedRedemption {
@@ -37,6 +39,10 @@ interface ScannedRedemption {
   token: string;
   timestamp: number;
   expiry: number;
+  studentName?: string;
+  productName?: string;
+  productImage?: string;
+  eduCoinsUsed?: number;
 }
 
 interface RedemptionQRScannerProps {
