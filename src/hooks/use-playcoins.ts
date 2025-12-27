@@ -68,15 +68,26 @@ export function usePlayCoins() {
     queryKey: ["playcoins-transactions", user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
-      const { data, error } = await supabase
-        .from("playcoins_transactions")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false })
-        .limit(50);
-      
-      if (error) throw error;
-      return data as PlayCoinsTransaction[];
+
+      // Return empty transactions if Supabase not configured
+      if (!hasSupabaseConfig()) {
+        return [];
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from("playcoins_transactions")
+          .select("*")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending: false })
+          .limit(50);
+
+        if (error) throw error;
+        return data as PlayCoinsTransaction[];
+      } catch (error) {
+        console.error("Error fetching transactions:", error);
+        return [];
+      }
     },
     enabled: !!user?.id,
   });
