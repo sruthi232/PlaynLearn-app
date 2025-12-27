@@ -340,9 +340,8 @@ function RedemptionCard({
   const { t } = useTranslation();
 
   return (
-    <button
+    <div
       onClick={() => !disabled && onViewQR(redemption)}
-      disabled={disabled}
       className={`w-full text-left rounded-lg border-2 overflow-hidden transition-all ${
         disabled
           ? "bg-card/20 opacity-50 border-border/30 cursor-not-allowed"
@@ -377,7 +376,7 @@ function RedemptionCard({
           </code>
         </div>
 
-        {/* Expiry Info & Button */}
+        {/* Expiry Info & Action */}
         <div className="flex items-center justify-between gap-2 pt-1">
           {daysUntilExpiry >= 0 && !disabled && (
             <div className="text-xs text-muted-foreground flex items-center gap-1">
@@ -388,19 +387,13 @@ function RedemptionCard({
             </div>
           )}
           {!disabled && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onViewQR(redemption);
-              }}
-              className="text-xs font-semibold text-primary hover:text-primary/80 flex items-center gap-1"
-            >
+            <div className="text-xs font-semibold text-primary hover:text-primary/80 flex items-center gap-1 transition-colors">
               <Eye className="h-3 w-3" />
               View
-            </button>
+            </div>
           )}
         </div>
       </div>
-    </button>
+    </div>
   );
 }
