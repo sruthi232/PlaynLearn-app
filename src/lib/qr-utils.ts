@@ -4,8 +4,6 @@
  * Offline-first design for village environments
  */
 
-import { v4 as uuidv4 } from "crypto-js";
-
 export interface RedemptionData {
   id: string;
   studentId: string;
