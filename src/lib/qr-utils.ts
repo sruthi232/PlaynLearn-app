@@ -14,6 +14,8 @@ function generateUniqueId(): string {
 export interface RedemptionData {
   id: string;
   studentId: string;
+  studentName?: string;
+  studentEmail?: string;
   productId: string;
   productName: string;
   coinsRedeemed: number;
@@ -36,7 +38,9 @@ export function generateRedemptionCode(): string {
     .substring(2, 6)
     .toUpperCase();
   
-  return `${prefix}-${suffix}-${code}`;
+  const generatedCode = `${prefix}-${suffix}-${code}`;
+  console.log('Generated redemption code:', generatedCode);
+  return generatedCode;
 }
 
 /**
@@ -56,7 +60,9 @@ export function createRedemptionData(
   productId: string,
   productName: string,
   coinsRedeemed: number,
-  expiryDays: number = 7
+  expiryDays: number = 7,
+  studentName?: string,
+  studentEmail?: string
 ): RedemptionData {
   const now = Date.now();
   const expiryDate = now + expiryDays * 24 * 60 * 60 * 1000;
@@ -64,6 +70,8 @@ export function createRedemptionData(
   return {
     id: generateUniqueId(),
     studentId,
+    studentName,
+    studentEmail,
     productId,
     productName,
     coinsRedeemed,

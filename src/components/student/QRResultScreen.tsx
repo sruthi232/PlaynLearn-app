@@ -20,13 +20,13 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import { useSoundEffects } from "@/hooks/use-sound-effects";
+import { RobustQRCode } from "@/components/ui/robust-qr-code";
 import type { RedemptionData } from "@/lib/qr-utils";
 
 interface QRResultScreenProps {
   redemptionData: RedemptionData;
   onBack: () => void;
   onSaveToWallet: () => void;
-  QRCodeComponent?: React.ComponentType<any>;
   isOnline?: boolean;
 }
 
@@ -58,7 +58,6 @@ export function QRResultScreen({
   redemptionData,
   onBack,
   onSaveToWallet,
-  QRCodeComponent,
   isOnline = true,
 }: QRResultScreenProps) {
   const { t } = useTranslation();
@@ -212,18 +211,12 @@ export function QRResultScreen({
                 ref={qrRef}
                 className="flex items-center justify-center rounded-lg bg-white p-3 shadow-lg"
               >
-                {QRCodeComponent ? (
-                  <QRCodeComponent
-                    value={redemptionData.redemptionCode}
-                    size={200}
-                    level="H"
-                    includeMargin={true}
-                  />
-                ) : (
-                  <div className="flex h-56 w-56 items-center justify-center rounded bg-muted">
-                    <p className="text-sm text-muted-foreground">QR Code</p>
-                  </div>
-                )}
+                <RobustQRCode
+                  value={redemptionData.redemptionCode}
+                  size={200}
+                  level="H"
+                  includeMargin={true}
+                />
               </div>
             </div>
 
@@ -231,9 +224,17 @@ export function QRResultScreen({
             <p className="text-center text-xs text-muted-foreground">
               {t("redemption.showQRToTeacher", {
                 defaultValue:
-                  "Show this QR to your teacher to collect your reward.",
+                  "Show this QR code to your teacher to collect your reward.",
               })}
             </p>
+            
+            {/* QR Code Display Status */}
+            <div className="text-center">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                QR Code Ready for Verification
+              </div>
+            </div>
           </div>
 
           {/* Redemption Code Card */}

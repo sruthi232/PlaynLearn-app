@@ -19,13 +19,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { SimpleQRCode } from "@/components/ui/simple-qr-code";
 import type { RedemptionData } from "@/lib/qr-utils";
 
 interface MyRedeemedRewardsScreenProps {
   redemptions: RedemptionData[];
   onBack: () => void;
   onViewQR: (redemption: RedemptionData) => void;
-  QRCodeComponent?: React.ComponentType<any>;
 }
 
 interface StatusConfig {
@@ -40,7 +40,6 @@ export function MyRedeemedRewardsScreen({
   redemptions,
   onBack,
   onViewQR,
-  QRCodeComponent,
 }: MyRedeemedRewardsScreenProps) {
   const { t } = useTranslation();
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
@@ -66,14 +65,14 @@ export function MyRedeemedRewardsScreen({
         color: "text-yellow-400",
         bgColor: "bg-yellow-400/10 border-yellow-400/30",
         label: t("redemption.status.pending", {
-          defaultValue: "🟡 Ready for Pickup",
+          defaultValue: "🟡 Ready for Teacher Verification",
         }),
       },
       verified: {
         icon: <Zap className="h-4 w-4" />,
         color: "text-blue-400",
         bgColor: "bg-blue-400/10 border-blue-400/30",
-        label: t("redemption.status.verified", { defaultValue: "🔵 Verified" }),
+        label: t("redemption.status.verified", { defaultValue: "🔵 Verified by Teacher" }),
       },
       collected: {
         icon: <CheckCircle2 className="h-4 w-4" />,
@@ -87,7 +86,7 @@ export function MyRedeemedRewardsScreen({
         icon: <AlertCircle className="h-4 w-4" />,
         color: "text-red-500",
         bgColor: "bg-red-500/10 border-red-500/30",
-        label: t("redemption.status.rejected", { defaultValue: "❌ Rejected" }),
+        label: t("redemption.status.rejected", { defaultValue: "❌ Rejected by Teacher" }),
       },
       expired: {
         icon: <AlertCircle className="h-4 w-4" />,
@@ -225,20 +224,23 @@ export function MyRedeemedRewardsScreen({
 
         {/* Content */}
         <div className="space-y-6 px-4 py-6">
-          {/* Ready for Pickup Section */}
+          {/* Ready for Teacher Verification Section */}
           {groupedRedemptions.ready.length > 0 && (
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4 text-yellow-400" />
                 <h2 className="font-heading text-sm font-semibold text-foreground">
-                  {t("redemption.readyForPickup", {
-                    defaultValue: "Ready",
+                  {t("redemption.awaitingVerification", {
+                    defaultValue: "Awaiting Teacher Verification",
                   })}
                 </h2>
                 <Badge className="bg-yellow-400/20 text-yellow-400 border-yellow-400/30 text-xs">
                   {groupedRedemptions.ready.length}
                 </Badge>
               </div>
+              <p className="text-xs text-muted-foreground mb-3">
+                Show these QR codes to your teacher for verification
+              </p>
               <div className="space-y-2">
                 {groupedRedemptions.ready.map((redemption) => (
                   <RedemptionCard

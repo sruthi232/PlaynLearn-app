@@ -13,8 +13,9 @@ import {
   Loader2,
   Zap,
 } from "lucide-react";
-import { useState, useRef, useMemo, Suspense, lazy } from "react";
+import { useState, useRef, useMemo, Suspense, lazy, useEffect } from "react";
 import { useWallet } from "@/contexts/WalletContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import { useSoundEffects } from "@/hooks/use-sound-effects";
 import {
@@ -36,14 +37,7 @@ import { createRedemptionData } from "@/lib/qr-utils";
 import type { RedemptionData } from "@/lib/qr-utils";
 
 // Lazy load QRCode component since it depends on qrcode.react
-let QRCodeComponent: any = null;
-try {
-  const QRCode = require("qrcode.react").default;
-  QRCodeComponent = QRCode;
-} catch (e) {
-  // qrcode.react not installed yet
-  QRCodeComponent = null;
-}
+// Using SimpleQRCode component instead for better compatibility
 
 // Filter list in exact order as specified
 const FILTER_ORDER: FilterType[] = [
@@ -80,6 +74,28 @@ export default function RewardsPage() {
 
   const { balance, earned, spent, transactions, addTransaction } = useWallet();
   const { playSuccess } = useSoundEffects();
+  const { user } = useAuth();
+
+  // Load saved redemptions from localStorage on component mount
+  useEffect(() => {
+    // Get current user ID from auth context
+    const loadRedemptions = async () => {
+      if (user?.id) {
+        const studentId = user.id;
+        const saved = localStorage.getItem(`student_redemptions_${studentId}`);
+        if (saved) {
+          try {
+            const redemptions = JSON.parse(saved);
+            setSavedRedemptions(redemptions);
+          } catch (error) {
+            console.error('Error loading saved redemptions:', error);
+          }
+        }
+      }
+    };
+    
+    loadRedemptions();
+  }, [user?.id]);
 
   const currentBalance = balance;
 
@@ -96,6 +112,7 @@ export default function RewardsPage() {
 
   // Handle QR generation from modal
   const handleQRGenerated = (redemptionData: RedemptionData) => {
+    console.log('QR Generated:', redemptionData);
     setGeneratedRedemption(redemptionData);
     setShowQRResultScreen(true);
   };
@@ -108,6 +125,8 @@ export default function RewardsPage() {
   // Handle saving redemption to wallet
   const handleSaveToWallet = () => {
     if (generatedRedemption) {
+      console.log('Saving redemption to wallet:', generatedRedemption);
+      
       // Deduct coins from wallet
       addTransaction(
         generatedRedemption.coinsRedeemed,
@@ -116,7 +135,24 @@ export default function RewardsPage() {
       );
 
       // Save to redemptions list
-      setSavedRedemptions([...savedRedemptions, generatedRedemption]);
+      const updatedRedemptions = [...savedRedemptions, generatedRedemption];
+      setSavedRedemptions(updatedRedemptions);
+
+      // Save to localStorage for teacher verification using real student ID
+      const studentId = generatedRedemption.studentId;
+      const storageKey = `student_redemptions_${studentId}`;
+      
+      console.log('Saving to localStorage key:', storageKey);
+      console.log('Saving redemptions:', updatedRedemptions);
+      
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify(updatedRedemptions)
+      );
+      
+      // Verify it was saved
+      const saved = localStorage.getItem(storageKey);
+      console.log('Verification - saved data:', saved);
 
       playSuccess?.();
       toast.success(
@@ -404,7 +440,6 @@ export default function RewardsPage() {
           redemptionData={generatedRedemption}
           onBack={handleBackFromQR}
           onSaveToWallet={handleSaveToWallet}
-          QRCodeComponent={QRCodeComponent}
           isOnline={isOnline}
         />
       )}
@@ -415,7 +450,6 @@ export default function RewardsPage() {
           redemptions={savedRedemptions}
           onBack={handleBackFromMyRewards}
           onViewQR={handleViewQRFromWallet}
-          QRCodeComponent={QRCodeComponent}
         />
       )}
 

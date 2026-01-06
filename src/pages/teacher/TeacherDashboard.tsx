@@ -77,7 +77,7 @@ export default function TeacherDashboard() {
       id: "scan-qr",
       icon: QrCode,
       label: t("teacher.scanQR", { defaultValue: "Scan QR" }),
-      description: t("teacher.scanQRDesc", { defaultValue: "Verify reward redemptions" }),
+      description: t("teacher.scanQRDesc", { defaultValue: "Verify student reward redemptions" }),
       color: "from-primary to-primary/80",
       onClick: () => navigate("/teacher/scan-qr"),
     },

@@ -90,6 +90,7 @@ const TeacherCreateAssignmentPage = lazy(() => import("./pages/teacher/TeacherCr
 const TeacherClassManagementPage = lazy(() => import("./pages/teacher/TeacherClassManagementPage"));
 const TeacherCreateClassPage = lazy(() => import("./pages/teacher/TeacherCreateClassPage"));
 const TeacherProfilePage = lazy(() => import("./pages/teacher/TeacherProfilePage"));
+const TeacherRewardQRScanPage = lazy(() => import("./pages/teacher/TeacherRewardQRScanPage"));
 const ParentDashboard = lazy(() => import("./pages/parent/ParentDashboard"));
 const ParentChildProgressPage = lazy(() => import("./pages/parent/ParentChildProgressPage"));
 const ParentFamilyTasksPage = lazy(() => import("./pages/parent/ParentFamilyTasksPage"));
@@ -480,7 +481,7 @@ const App = () => (
                 } />
                 <Route path="/teacher/scan-qr" element={
                   <ProtectedRoute allowedRoles={["teacher"]}>
-                    <TeacherTaskVerificationPage />
+                    <TeacherRewardQRScanPage />
                   </ProtectedRoute>
                 } />
                 <Route path="/teacher/village-impact" element={

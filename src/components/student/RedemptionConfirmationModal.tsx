@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { createRedemptionData } from "@/lib/qr-utils";
 import { QRGenerationAnimated } from "./QRGenerationAnimated";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface Product {
   id: string;
@@ -48,6 +49,7 @@ export function RedemptionConfirmationModal({
   onGenerateQR,
 }: RedemptionConfirmationModalProps) {
   const { t } = useTranslation();
+  const { user, profile } = useAuth();
   const [isGenerating, setIsGenerating] = useState(false);
   const [showAnimatedLoading, setShowAnimatedLoading] = useState(false);
   const canAfford = currentBalance >= product.educoinsCost;
@@ -60,13 +62,23 @@ export function RedemptionConfirmationModal({
 
   // Handle animated loading completion
   const handleAnimationComplete = () => {
+    // Get student profile data from auth context
+    const studentName = profile?.full_name || user?.email?.split('@')[0] || "Unknown Student";
+    const studentEmail = user?.email || "No email provided";
+    const studentId = user?.id || "student_unknown";
+    
     // Create redemption data after animation completes
     const redemptionData = createRedemptionData(
-      "student_" + Date.now(), // Placeholder student ID
+      studentId,
       product.id,
       product.name,
-      product.educoinsCost
+      product.educoinsCost,
+      7, // 7 days expiry
+      studentName,
+      studentEmail
     );
+
+    console.log('Redemption data created:', redemptionData);
 
     // Notify parent about the generated redemption
     onGenerateQR?.(redemptionData);
