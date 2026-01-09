@@ -4,10 +4,73 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage
+*.lcov
+.nyc_output
+
+# Dependency directories
+node_modules/
+jspm_packages/
+web_modules/
+
+# Build output
 dist
 dist-ssr
-*.local
+build
+.next
+out
+
+# Cache
+.cache
+.parcel-cache
+.eslintcache
+.stylelintcache
+.npm
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Editor & OS
+.vscode/
+.vscode-test
+.DS_Store
+
+# Framework caches
+.nuxt
+.vuepress/dist
+.temp
+.svelte-kit/
+**/.vitepress/dist
+**/.vitepress/cache
+.docusaurus
+
+# Serverless / Firebase
+.serverless/
+.firebase/
+
+# Yarn v3
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Vite logs
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
